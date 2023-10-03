@@ -13,7 +13,7 @@ import {
   zora,
 } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
-
+import { ChakraProvider } from "@chakra-ui/react";
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
     mainnet,
@@ -44,7 +44,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider chains={chains}>
+      <ChakraProvider>
         <Component {...pageProps} />
+      </ChakraProvider>
       </RainbowKitProvider>
     </WagmiConfig>
   );
