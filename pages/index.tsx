@@ -5,7 +5,7 @@ import styles from "../styles/Home.module.css";
 import Hero from '../components/home/Hero'
 import Nav from "../components/general/Navbar";
 import Features from "../components/home/Features";
-
+import '../config/i18n'
 const Home: NextPage = () => {
   return (
     <>

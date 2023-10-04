@@ -1,5 +1,3 @@
-'use client'
-
 import {
   Box,
   Button,
@@ -12,6 +10,8 @@ import {
   useColorModeValue,
 } from '@chakra-ui/react'
 import { ReactElement } from 'react'
+import { useTranslation } from 'react-i18next'
+import i18n from "i18next";
 import {
   FcAbout,
   FcAssistant,
@@ -61,12 +61,13 @@ const Card = ({ heading, description, icon, href }: CardProps) => {
   )
 }
 
-export default function gridListWith() {
+export default function Features() {
+	const { t } = useTranslation()
   return (
     <Box p={4}>
       <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'}>
         <Heading fontSize={{ base: '2xl', sm: '4xl' }} fontWeight={'bold'}>
-          Short heading
+          {t('test')}
         </Heading>
         <Text color={'gray.600'} fontSize={{ base: 'sm', sm: 'lg' }}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis obcaecati ut
