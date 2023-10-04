@@ -14,6 +14,7 @@ import {
 } from 'wagmi/chains';
 import { publicProvider } from 'wagmi/providers/public';
 import { ChakraProvider } from "@chakra-ui/react";
+import {theme} from '../config/theme'
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
     mainnet,
@@ -29,7 +30,7 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
 
 const { connectors } = getDefaultWallets({
   appName: 'RainbowKit App',
-  projectId: 'YOUR_PROJECT_ID',
+  projectId: process.env.NEXT_PUBLIC_WALLET_CONNECT_ID!,
   chains,
 });
 
@@ -44,7 +45,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <WagmiConfig config={wagmiConfig}>
       <RainbowKitProvider chains={chains}>
-      <ChakraProvider>
+      <ChakraProvider theme={theme}>
         <Component {...pageProps} />
       </ChakraProvider>
       </RainbowKitProvider>
