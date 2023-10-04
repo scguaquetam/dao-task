@@ -6,7 +6,12 @@ import Hero from '../components/home/Hero'
 import Nav from "../components/general/Navbar";
 import Features from "../components/home/Features";
 import '../config/i18n'
+import { useAccount } from "wagmi";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 const Home: NextPage = () => {
+  const { address, isConnected } = useAccount()
+  const router = useRouter()
   return (
     <>
       <Nav />
