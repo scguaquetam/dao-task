@@ -60,6 +60,8 @@ export default function Nav() {
   const router = useRouter();
 
   useEffect(() => {
+    console.log('isconnected is ', isConnected);
+    
     if (isConnected) setLoaded(true);
     if (isDisconnected) setLoaded(false);
   }, [isConnected, isDisconnected]);
