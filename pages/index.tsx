@@ -1,14 +1,17 @@
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 import type { NextPage } from "next";
+import { useRouter } from "next/navigation";
 import Head from "next/head";
+import { useAccount } from "wagmi";
+import '../config/i18n'
+import { useMutation } from '@apollo/client';
+import { gql } from "@apollo/client";
+import createApolloClient from "../apollo-client";
+
 import styles from "../styles/Home.module.css";
 import Hero from '../components/home/Hero'
 import Nav from "../components/general/Navbar";
 import Features from "../components/home/Features";
-import '../config/i18n'
-import { useAccount } from "wagmi";
-import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+
 const Home: NextPage = () => {
   const { address, isConnected } = useAccount()
   const router = useRouter()

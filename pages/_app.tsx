@@ -1,8 +1,8 @@
-import '../styles/globals.css';
 import '@rainbow-me/rainbowkit/styles.css';
 import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import type { AppProps } from 'next/app';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
+import { ApolloClient, InMemoryCache, ApolloProvider, NormalizedCacheObject } from "@apollo/client";
 import {
   arbitrum,
   goerli,
@@ -16,6 +16,8 @@ import { publicProvider } from 'wagmi/providers/public';
 import { ChakraProvider } from "@chakra-ui/react";
 import {theme} from '../config/theme'
 import Layout from '../components/app/Layout';
+import '../styles/globals.css';
+
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
     mainnet,
@@ -43,15 +45,21 @@ const wagmiConfig = createConfig({
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const apolloClient: ApolloClient<NormalizedCacheObject> = new ApolloClient({
+    uri: "http://localhost:3000/graphql",
+    cache: new InMemoryCache(),
+  });
   return (
     <WagmiConfig config={wagmiConfig}>
-      <RainbowKitProvider chains={chains}>
-      <ChakraProvider theme={theme}>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </ChakraProvider>
-      </RainbowKitProvider>
+      <ApolloProvider client={apolloClient}>
+        <RainbowKitProvider chains={chains}>
+          <ChakraProvider theme={theme}>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </ChakraProvider>
+        </RainbowKitProvider>
+      </ApolloProvider>
     </WagmiConfig>
   );
 }
