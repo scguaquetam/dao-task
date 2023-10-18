@@ -25,7 +25,6 @@ export default async function handler(
 }
 async function login(req: NextApiRequest, res: NextApiResponse) {
   try {
-    console.log('22');
     const response = await client.mutate({
       mutation: LOGIN,
       variables: {
@@ -34,7 +33,6 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
         },
       },
     });
-    console.log('33');
     console.log(response.data);
     if (response) {
       res.status(200).json({ message: "User Found", data: response.data });

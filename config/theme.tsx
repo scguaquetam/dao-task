@@ -1,6 +1,24 @@
 import { extendTheme } from "@chakra-ui/react";
 
 export const theme = extendTheme({
+  components: {
+    ModalContent: {
+      baseStyle: {
+        borderRadius: "40px", // Rounded borders
+        width: "80%", // You can adjust this or set a fixed width
+      },
+    },
+    Button: {
+      baseStyle: {
+        borderRadius: "25px", // Rounded borders for the button
+      },
+    },
+    Input : {
+      baseStyle: {
+        borderRadius: "25px", // Rounded borders for the button
+      },
+    }
+  },
   styles: {
     global: (props : { colorMode: string; }) => ({
       body: {
