@@ -1,6 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { ApolloClient, InMemoryCache, useMutation } from "@apollo/client";
 import { LOGIN } from "../../graphql/login";
+import { CREATE_USER } from "../../graphql/createUser";
 
 const client = new ApolloClient({
   uri: "http://localhost:3000/graphql",
@@ -17,9 +18,11 @@ export default async function handler(
       if (req.body.type === "login") {
         return await login(req, res);
       }
+      else if (req.body.type === "createUser") {
+        return await createUser(req, res);
+     ; }
     }
   } catch (error) {
-    console.log("Error is ", error);
     res.status(500).json({ message: "error fetching" });
   }
 }
@@ -33,12 +36,30 @@ async function login(req: NextApiRequest, res: NextApiResponse) {
         },
       },
     });
-    console.log(response.data);
     if (response) {
       res.status(200).json({ message: "User Found", data: response.data });
       return;
     }
   } catch (error) {
-    res.status(500).json({ message: "Error finding user" });
+    res.status(500).json({ error: error });
+  }
+}
+async function createUser(req: NextApiRequest, res: NextApiResponse) {
+  try {
+    const response = await client.mutate({
+      mutation: CREATE_USER,
+      variables: {
+        signUpInput: {
+          address: req.body.address,
+          nickname: req.body.nickname,
+        },
+      },
+    });
+    if (response) {
+      res.status(200).json({ message: "User Found", data: response.data });
+      return;
+    }
+  } catch (error) {
+    res.status(500).json({ error: error });
   }
 }

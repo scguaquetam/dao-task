@@ -1,16 +1,19 @@
-import React, { useEffect } from "react";
+import React, { use, useEffect } from "react";
 import { useAccount } from "wagmi";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { LoginModal } from "../../components/modal/LoginModal";
+import { useMutation } from "@apollo/client";
+import { CREATE_USER } from "../../graphql/createUser";
+import { LOGIN } from "../../graphql/login";
+import { Button } from "@chakra-ui/react";
 const Dashboard = () => {
+  const [signUp, { data, loading, error }] = useMutation(CREATE_USER);
+  const [login, { data: loginData, loading: loginLoading, error: loginError }] = useMutation(LOGIN);
   const { isConnected, isDisconnected, address } = useAccount();
   const { openConnectModal, connectModalOpen } = useConnectModal();
   const [isRegistered, setIsRegistered] = React.useState(false);
   const [nickname, setNickname] = React.useState("");
   useEffect(() => {
-    console.log("isconnected is ", isConnected);
-
-    // Si no está conectado, intenta conectar
     if (isDisconnected && openConnectModal) {
       openConnectModal();
     }
@@ -18,31 +21,42 @@ const Dashboard = () => {
   }, [isConnected, isDisconnected, connectModalOpen]);
   const onLogin = async () => {
     try {
-      const url = "/api/graphql";
-      const body = {
-        type: "login",
-        address: address,
-      };
-      const response = await fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await login({
+        variables: {
+          loginInput: {
+            address: address,
+          },
         },
-        body: JSON.stringify(body),
       });
-      const responseData = await response.json();
-      console.log("final response data is ", responseData);
+      setIsRegistered(true)
     } catch (error) {
       console.error(error);
     }
   };
+  const createUser = async () => {
+    try {
+      const response = await signUp({
+        variables: {
+          signUpInput: {
+            address: address,
+            nickname: nickname,
+          },
+        },
+      });
+    } catch (error) {
+      console.error('error is ', error);
+    }
+  }
   return isRegistered ? (
-    <div>Dashboard</div>
+    <>
+      <div>Dashboard</div>
+    </>
   ) : (
     <LoginModal
       isOpen={!isRegistered}
       setNickname={setNickname}
       nickname={nickname}
+      createUser={createUser}
     />
   );
 };

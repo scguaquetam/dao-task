@@ -7,30 +7,40 @@ import {
   ModalHeader,
   ModalOverlay,
   Input,
+  useToast,
 } from "@chakra-ui/react";
 
 interface LoginModalProps {
   isOpen: boolean;
   setNickname: React.Dispatch<React.SetStateAction<string>>;
   nickname: string;
+  createUser: () => void;
 }
 
-export function LoginModal({ isOpen, setNickname, nickname }: LoginModalProps) {
-  const OverlayOne = () => (
-    <ModalOverlay
-      bg="blackAlpha.300"
-      backdropFilter="blur(10px) hue-rotate(90deg)"
-    />
-  );
-
-  const [overlay, setOverlay] = useState(<OverlayOne />);
+export function LoginModal({ isOpen, setNickname, nickname, createUser }: LoginModalProps) {
+  const toast = useToast()
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setNickname(value);
   };
+  const onContinue = () => {
+    if(nickname.length < 3) {
+      toast({
+        title: 'Please input a correct nickname.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      })
+    } else {
+      createUser()
+    }
+  };
   return (
     <Modal isCentered isOpen={isOpen} onClose={() => {}}>
-      {overlay}
+      <ModalOverlay
+        bg="blackAlpha.300"
+        backdropFilter="blur(10px) hue-rotate(90deg)"
+      />
       <ModalContent bg="#9776E1" borderRadius={"20px"}>
         <ModalHeader textAlign="center" fontSize={"2xl"}>
           Choose a nickname
@@ -50,6 +60,7 @@ export function LoginModal({ isOpen, setNickname, nickname }: LoginModalProps) {
             mt={4}
             bg="linear-gradient(#8a46ff,#6e38cc)"
             size="lg"
+            onClick={onContinue}
           >
             Continue
           </Button>

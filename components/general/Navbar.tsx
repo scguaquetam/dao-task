@@ -52,16 +52,9 @@ export default function Nav() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isConnected, isDisconnected } = useAccount();
   const [loaded, setLoaded] = useState(false);
-  const account = useAccount({
-    onConnect({ address, connector, isReconnected }) {
-      console.log("Connected", { address, connector, isReconnected });
-    },
-  });
-  const router = useRouter();
 
+  const router = useRouter();
   useEffect(() => {
-    console.log('isconnected is ', isConnected);
-    
     if (isConnected) setLoaded(true);
     if (isDisconnected) setLoaded(false);
   }, [isConnected, isDisconnected]);

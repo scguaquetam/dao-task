@@ -7,7 +7,7 @@ export const LOGIN = gql`
       user {
         id
         address
-        nickName
+        nickname
         roles
         isActive
       }
