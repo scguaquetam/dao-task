@@ -17,6 +17,8 @@ import { ChakraProvider } from "@chakra-ui/react";
 import {theme} from '../config/theme'
 import Layout from '../components/app/Layout';
 import '../styles/globals.css';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
@@ -51,6 +53,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   });
   return (
     <WagmiConfig config={wagmiConfig}>
+      <DndProvider backend={HTML5Backend}>
       <ApolloProvider client={apolloClient}>
         <RainbowKitProvider chains={chains}>
           <ChakraProvider theme={theme}>
@@ -60,6 +63,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           </ChakraProvider>
         </RainbowKitProvider>
       </ApolloProvider>
+      </DndProvider>
     </WagmiConfig>
   );
 }

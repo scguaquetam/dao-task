@@ -5,7 +5,6 @@ export const theme = extendTheme({
     ModalContent: {
       baseStyle: {
         borderRadius: "40px", // Rounded borders
-        width: "80%", // You can adjust this or set a fixed width
       },
     },
     Button: {

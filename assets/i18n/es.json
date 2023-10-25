@@ -1,3 +1,14 @@
 {
-  "test": "Test"
+  "test": "Test",
+  "signUp": {
+    "choose_nickname": "Selecciona un nombre de usuario",
+    "continue": "Continúa",
+    "role_title" : "¿Cuál es tu rol principal?",
+    "button_options" : {
+      "dao_manager" : "Admin DAO",
+      "dao_contributor": "Contribuidor",
+      "user": "Usuario",
+      "note": "* Puedes cambiarlo luego en tu perfil"
+    }
+  }
 }

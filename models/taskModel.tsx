@@ -1,15 +1,13 @@
-enum TaskStatus {
-  OPEN = 'OPEN',
-  IN_PROGRESS = 'IN_PROGRESS',
-  DONE = 'DONE',
-}
+import { ColumnType, TaskStatus } from "../enums/enums";
 
-export interface Task {
-  id: number;
+export interface TaskModel {
+  id: string;
   title: string;
-  description: string;
-  status: TaskStatus;
-  value: number;
-  owner: string;
-  createdAt: string;
+  column: ColumnType;
+  color: string;
+  description?: string;
+  status?: TaskStatus; 
+  value?: number;
+  owner?: string;
+  createdAt?: string;
 }

@@ -1,3 +1,14 @@
 {
-  "test": "Test"
+  "test": "Test",
+  "signUp": {
+    "choose_nickname": "Choose a nickname",
+    "continue": "Continue",
+    "role_title" : "What's your primary role?",
+    "button_options" : {
+      "dao_manager" : "DAO Manager",
+      "dao_contributor": "DAO Contributor",
+      "user": "DAO User Only",
+      "note": "* You can change this later in My Profile'."
+    }
+  }
 }
