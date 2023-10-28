@@ -20,7 +20,7 @@ import {
   Stack,
   useColorMode,
   Center,
-  Image
+  Image,
 } from "@chakra-ui/react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
@@ -77,7 +77,7 @@ export default function Nav() {
               <Menu>
                 {loaded && <ConnectButton />}
                 <Button
-                  px={8}  
+                  px={8}
                   bg={useColorModeValue("#1b5a9e", "#1b5a9e")}
                   color={"white"}
                   rounded={"md"}
@@ -123,22 +123,26 @@ export default function Nav() {
                 </MenuList>
               </Menu>
               <Menu>
-              <MenuButton as={Button}>
-                <Image 
-                  src={i18n.language === "en" ? "/images/eng_flag.png" : "/images/esp_flag.png"} 
-                  alt={i18n.language === "en" ? "England Flag" : "Spain Flag"}
-                  boxSize="30px" // Ajusta el tamaño según prefieras
-                />
-              </MenuButton>
-              <MenuList>
-                <MenuItem onClick={() => changeLanguage("en")}>
-                  English
-                </MenuItem>
-                <MenuItem onClick={() => changeLanguage("es")}>
-                  Español
-                </MenuItem>
-              </MenuList>
-            </Menu>
+                <MenuButton as={Button}>
+                  <Image
+                    src={
+                      i18n.language === "en"
+                        ? "/images/eng_flag.png"
+                        : "/images/esp_flag.png"
+                    }
+                    alt={i18n.language === "en" ? "England Flag" : "Spain Flag"}
+                    boxSize="30px" // Ajusta el tamaño según prefieras
+                  />
+                </MenuButton>
+                <MenuList>
+                  <MenuItem onClick={() => changeLanguage("en")}>
+                    English
+                  </MenuItem>
+                  <MenuItem onClick={() => changeLanguage("es")}>
+                    Español
+                  </MenuItem>
+                </MenuList>
+              </Menu>
             </Stack>
           </Flex>
         </Flex>

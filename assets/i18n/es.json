@@ -10,5 +10,12 @@
       "user": "Usuario",
       "note": "* Puedes cambiarlo luego en tu perfil"
     }
+  },
+  "sidebar": {
+    "discover": "Descubre",
+    "my_task_boart" : "Mi tablero de tareas",
+    "inbox" : "Bandeja de entrada",
+    "bookmarks" : "Marcadores",
+    "profiles" : "Perfiles"
   }
 }

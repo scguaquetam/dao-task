@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { ApolloClient, InMemoryCache, useMutation } from "@apollo/client";
 import { LOGIN } from "../../graphql/login";
-import { CREATE_USER } from "../../graphql/createUser";
+import { CREATE_USER } from "../../graphql/createUser.graphql";
 
 const client = new ApolloClient({
   uri: "http://localhost:3000/graphql",

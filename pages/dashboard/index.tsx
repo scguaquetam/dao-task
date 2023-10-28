@@ -4,12 +4,14 @@ import { useAccount } from "wagmi";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
 import { Button, useToast } from "@chakra-ui/react";
 
-import { CREATE_USER } from "../../graphql/createUser";
+import { CREATE_USER } from "../../graphql/createUser.graphql";
+import { UPDATE_USER } from "../../graphql/updateUser.graphql";
 import { LOGIN } from "../../graphql/login";
 
 import { LoginModal } from "../../components/modal/LoginModal";
 import { useRouter } from "next/router";
-import KanbanComponent from "../../components/dashboard/kanbanComponent";
+import KanbanComponent from "../../components/dashboard/KanbanComponent";
+import { getHeader } from "../../utils/helpers";
 
 const Dashboard = () => {
   const router = useRouter();
@@ -18,6 +20,7 @@ const Dashboard = () => {
   const { openConnectModal, connectModalOpen } = useConnectModal();
   const { dashboardId } = router.query;
   const [signUp, { data, loading, error }] = useMutation(CREATE_USER);
+  const [updateUser, { data : updateData, loading: updateLoading, error: updateError }] = useMutation(UPDATE_USER);
   const [login, { data: loginData, loading: loginLoading, error: loginError }] = useMutation(LOGIN);
   const [isRegistered, setIsRegistered] = useState<boolean>(false);
   const [nickname, setNickname] = useState<string>("");
@@ -62,6 +65,8 @@ const Dashboard = () => {
       });
       console.log("response is ", response);
       setSignUpStep(1);
+      const token = response?.data?.signUp?.token
+      localStorage.setItem('token', token)
     } catch (e : any) {
       console.log(error?.message)
       if(!error?.message|| error?.message === undefined ) return
@@ -76,16 +81,26 @@ const Dashboard = () => {
   }
   const pickRole = async (role: string) => {
     try {
-        
+      console.log("role is ", role);
+      const response = await updateUser({
+        variables: {
+          updateUserInput: {
+            id: data.signUp.user.id,
+            primaryRol: role,
+          },
+        },
+        context: getHeader()
+      });
+      console.log("response is ", response);
+      setIsRegistered(true)
     } catch (error) {
       console.error('error is ', error);
       toast({
-        title: "Error picking user role.",
+        title: "Error picking user role, please try again later.",
         status: "error",
         duration: 5000,
         isClosable: true,
       });
-      //TODO show error for not possible to edit role
     }
   }
   return isRegistered ? (

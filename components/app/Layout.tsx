@@ -39,6 +39,15 @@ import { IconType } from "react-icons";
 import { useRouter } from "next/router";
 import { ReactNode } from "react";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { useTranslation } from "react-i18next";
+import {
+  FaBookmark,
+  FaClipboardList,
+  FaComments,
+  FaEye,
+  FaUser,
+} from "react-icons/fa";
+import i18n from "../../config/i18n";
 
 interface LinkItemProps {
   name: string;
@@ -58,15 +67,16 @@ interface SidebarProps extends BoxProps {
   onClose: () => void;
 }
 
-const LinkItems: Array<LinkItemProps> = [
-  { name: "Home", icon: FiHome },
-  { name: "Trending", icon: FiTrendingUp },
-  { name: "Explore", icon: FiCompass },
-  { name: "Favourites", icon: FiStar },
-  { name: "Settings", icon: FiSettings },
-];
-
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+  const { t } = useTranslation();
+
+  const LinkItems: Array<LinkItemProps> = [
+    { name: t("sidebar.discover"), icon: FaEye },
+    { name: t("sidebar.my_task_boart"), icon: FaClipboardList },
+    { name: t("sidebar.inbox"), icon: FaComments },
+    { name: t("sidebar.bookmarks"), icon: FaBookmark },
+    { name: t("sidebar.profiles"), icon: FaUser },
+  ];
   return (
     <Box
       transition="3s ease"
@@ -81,12 +91,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       <Flex h="20" alignItems="center" mx="8" justifyContent="center">
         {" "}
         {/* Modificar aquí */}
-        <Image
-          src={"/images/logo.png"}
-          maxH={20} 
-          maxW={20}
-          alt="Logo" 
-        />
+        <Image src={"/images/logo.png"} maxH={20} maxW={100} alt="Logo" />
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
       {LinkItems.map((link) => (
@@ -137,7 +142,10 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
 
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   const { colorMode, toggleColorMode } = useColorMode();
-
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+  };
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -216,6 +224,23 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               <MenuItem>Billing</MenuItem>
               <MenuDivider />
               <MenuItem>Sign out</MenuItem>
+            </MenuList>
+          </Menu>
+          <Menu>
+            <MenuButton as={Button}>
+              <Image
+                src={
+                  i18n.language === "en"
+                    ? "/images/eng_flag.png"
+                    : "/images/esp_flag.png"
+                }
+                alt={i18n.language === "en" ? "England Flag" : "Spain Flag"}
+                boxSize="30px" // Ajusta el tamaño según prefieras
+              />
+            </MenuButton>
+            <MenuList>
+              <MenuItem onClick={() => changeLanguage("en")}>English</MenuItem>
+              <MenuItem onClick={() => changeLanguage("es")}>Español</MenuItem>
             </MenuList>
           </Menu>
         </Flex>

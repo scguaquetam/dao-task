@@ -44,7 +44,7 @@ export function LoginModal({
     setNickname(value);
     seterrorCreating("")
   };
-  const [selectedButton, setSelectedButton] = useState<string>("user");
+  const [selectedButton, setSelectedButton] = useState<string>("daoContributor");
   const onContinue = () => {
     if (nickname.length < 3) {
       toast({
@@ -67,8 +67,8 @@ export function LoginModal({
           bg="blackAlpha.300"
           backdropFilter="blur(10px) hue-rotate(90deg)"
         />
-        <ModalContent bg="#9776E1" borderRadius={"20px"}>
-          <ModalHeader textAlign="center" fontSize={"2xl"} color={"white"}>
+        <ModalContent borderRadius={"20px"}>
+          <ModalHeader textAlign="center" fontSize={"2xl"} >
             {t("signUp.choose_nickname")}
           </ModalHeader>
           <ModalBody flexDirection="column" alignItems="center" mb={4}>
@@ -80,7 +80,6 @@ export function LoginModal({
               bg="linear-gradient(#3107DA,#5b1bcb)"
               onChange={(e) => onChangeInput(e)}
               value={nickname}
-              color={"white"}
             />
             <Button
               width="100%"
@@ -88,7 +87,6 @@ export function LoginModal({
               bg="linear-gradient(#8a46ff,#6e38cc)"
               size="lg"
               onClick={onContinue}
-              color={"white"}
             >
               {t("signUp.continue")}
             </Button>
@@ -107,7 +105,7 @@ export function LoginModal({
         bg="blackAlpha.300"
         backdropFilter="blur(10px) hue-rotate(90deg)"
       />
-      <ModalContent bg="rgba(205, 178, 249, 0.53)" borderRadius={"20px"}>
+      <ModalContent borderRadius={"20px"}>
         <ModalHeader textAlign="center" fontSize={"2xl"}>
           {t("signUp.role_title")}
         </ModalHeader>
@@ -166,31 +164,6 @@ export function LoginModal({
             </Button>
             <Text width="100px" textAlign="center" whiteSpace="normal">
               {t("signUp.button_options.dao_contributor")}
-            </Text>
-          </Flex>
-          <Flex
-            direction="column"
-            alignItems="center"
-            justifyContent="flex-start"
-          >
-            <Button
-              borderRadius="full"
-              width="80px"
-              height="80px"
-              onClick={() => {
-                setSelectedButton("user");
-              }}
-              mb={2}
-              bg={
-                selectedButton === "user"
-                  ? "linear-gradient(#8a46ff,#6e38cc)"
-                  : "gray.300"
-              }
-            >
-              <Icon as={FaUsers} fontSize="2xl" />
-            </Button>
-            <Text width="100px" textAlign="center" whiteSpace="normal">
-              {t("signUp.button_options.user")}
             </Text>
           </Flex>
         </Flex>

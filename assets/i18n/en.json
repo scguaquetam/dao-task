@@ -10,5 +10,12 @@
       "user": "DAO User Only",
       "note": "* You can change this later in My Profile'."
     }
+  },
+  "sidebar": {
+    "discover": "Discover",
+    "my_task_boart" : "My Task Board",
+    "inbox" : "Inbox",
+    "bookmarks" : "Bookmarks",
+    "profiles" : "Profiles"
   }
 }

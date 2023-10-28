@@ -22,3 +22,12 @@ export function pickChakraRandomColor(variant = '') {
   const color = colors[Math.floor(Math.random() * colors.length)];
   return color + variant;
 }
+
+export function getHeader () {
+  const token = localStorage.getItem('token');
+  return {
+    headers: {
+      authorization: token ? `Bearer ${token}` : ''
+    }
+  }
+}
