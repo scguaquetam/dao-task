@@ -18,7 +18,7 @@ import {
   Input,
   CardHeader,
 } from "@chakra-ui/react";
-import { AddIcon, ChevronDownIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { AddIcon } from "@chakra-ui/icons";
 
 import { Organization } from "../../types/organization.types";
 import { FETCH_ORGANIZATIONS } from "../../graphql/myOrganizations.graphql";
@@ -97,7 +97,7 @@ const organizations: Organization[] = [
 ];
 
 const MyOrganizations = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { data } = useQuery(FETCH_ORGANIZATIONS);
   const [orgs, setOrgs] = useState<Organization[]>([]);
@@ -106,11 +106,12 @@ const MyOrganizations = () => {
     setOrgs(organizations);
     return;
     //test
-
+    
     if (!data) return;
     console.log(data.organizationsByUser);
     setOrgs(data.organizationsByUser);
   }, [data]);
+  
   return (
     <>
       <Box mt={4} mb={8}>

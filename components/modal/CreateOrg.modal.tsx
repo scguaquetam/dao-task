@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useTranslation } from "react-i18next";
+import { useMutation } from "@apollo/client";
 import {
   Modal,
   ModalOverlay,
@@ -13,13 +16,16 @@ import {
   Button,
   Textarea,
   Image,
+  useToast,
+  Text,
 } from "@chakra-ui/react";
-import { storage } from "../../firebase.config"
+import { storage } from "../../firebase.config";
 import {
-	ref as fireRef,
-	uploadBytesResumable,
-	getDownloadURL
-} from 'firebase/storage'
+  ref as fireRef,
+  uploadBytesResumable,
+  getDownloadURL,
+} from "firebase/storage";
+import { CREATE_ORGANIZATION } from "../../graphql/createOrganization.graphql";
 
 type CreateOrganizationModalProps = {
   isOpen: boolean;
@@ -30,30 +36,104 @@ const CreateOrganizationModal: React.FC<CreateOrganizationModalProps> = ({
   isOpen,
   onClose,
 }) => {
-  const [title, setTitle] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
-  const [image, setImage] = useState<string | null>(null);
-
+  const { t } = useTranslation();
+  const toast = useToast()
+  const router = useRouter()
+  const [createOrganization, { data, error }] =
+    useMutation(CREATE_ORGANIZATION)
+  const [name, setName] = useState<string>("")
+  const [description, setDescription] = useState<string>("")
+  const [newOrgId, setNewOrgId] = useState<string>("")
+  const [image, setImage] = useState<string | null>(null)
+  const [file, setFile] = useState<File | null>(null)
+  const [loading, setLoading] = useState<boolean>(false)
+  const [created, setCreated] = useState<boolean>(true)
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file: File | null = e.target.files ? e.target.files[0] : null
-    if (file) {
-      const validImageTypes = ['image/jpeg', 'image/png', 'image/gif']
-			if (file && !validImageTypes.includes(file.type)) {
-				alert('Please select a valid image type (jpg, png, gif).')
-				return
-			}
-      const reader = new FileReader();
+    const selectedFile: File | null = e.target.files ? e.target.files[0] : null
+    if (selectedFile) {
+      const validImageTypes = ["image/jpeg", "image/png", "image/gif"]
+      if (selectedFile && !validImageTypes.includes(selectedFile.type)) {
+        alert("Please select a valid image type (jpg, png, gif).")
+        return
+      }
+      setFile(selectedFile)
+      const reader = new FileReader()
       reader.onloadend = () => {
         setImage(reader.result as string);
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(selectedFile);
     }
   };
+  const handleSubmit = async () => {
+    try {
+      setLoading(true);
+      let fileURL: string | null = null;
+      if (file) {
+        const fileRef = fireRef(storage, file?.name);
+        await uploadBytesResumable(fileRef, file);
+        fileURL = await getDownloadURL(fileRef);
+      }
+      console.log("fileurl is ", fileURL);
 
-  const handleSubmit = () => {
-    // Handle Firebase upload logic here
-    console.log(title, description, image);
+      const response = await createOrganization({
+        variables: {
+          createOrganizationInput: {
+            name: name,
+            description: description,
+            img: fileURL,
+          },
+        },
+      });
+      console.log("response is ", response);
+      setNewOrgId(response.data.createOrganization.id);
+      setCreated(true);
+      toast({
+        title: "Organization created",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Error creating organization, please try again later",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+      });
+    }
   };
+  const visitOrg = () => {
+    if(!newOrgId) window.location.reload()
+    router.push(`dashboard?id=${newOrgId}`);
+  };
+  if (created) {
+    return (
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay
+          bg="blackAlpha.300"
+          backdropFilter="blur(10px) hue-rotate(90deg)"
+        />
+        <ModalContent>
+          <ModalHeader>
+            {t("myOrganizations.create_organization.title")}
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text>Organization created successfully</Text>
+          </ModalBody>
+          <ModalFooter>
+            <Button colorScheme="purple" mr={3} onClick={visitOrg}>
+              {t("myOrganizations.create_organization.visit")}
+            </Button>
+            <Button colorScheme="blue" mr={3} onClick={onClose}>
+              {t("myOrganizations.create_organization.close")}
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
+    );
+  }
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -62,35 +142,62 @@ const CreateOrganizationModal: React.FC<CreateOrganizationModalProps> = ({
         backdropFilter="blur(10px) hue-rotate(90deg)"
       />
       <ModalContent>
-        <ModalHeader>Create Organization</ModalHeader>
+        <ModalHeader>
+          {t("myOrganizations.create_organization.title")}
+        </ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <FormControl mb={4}>
-            <FormLabel>Title</FormLabel>
+            <FormLabel>
+              {t("myOrganizations.create_organization.name")}
+            </FormLabel>
             <Input
               type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
           </FormControl>
           <FormControl mb={4}>
-            <FormLabel>Description</FormLabel>
+            <FormLabel>
+              {t("myOrganizations.create_organization.description")}
+            </FormLabel>
             <Textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
             />
           </FormControl>
-          <FormControl mb={4}>
-            <FormLabel>Image</FormLabel>
-            <Input type="file" onChange={handleImageChange} />
-            {image && <Image src={image} alt="Organization" boxSize="100px" />}
+          <FormControl mb={4} alignItems="center" justifyContent="center">
+            <FormLabel>
+              {t("myOrganizations.create_organization.image")}
+            </FormLabel>
+            <Input
+              type="file"
+              onChange={handleImageChange}
+              style={{ display: "none" }}
+              id="fileInput"
+            />
+            <Button as="label" htmlFor="fileInput" colorScheme="cyan">
+              {file ? file.name : "Seleccione un archivo"}
+            </Button>
+            {image && (
+              <Image
+                src={image}
+                alt="Organization"
+                boxSize="100px"
+                borderRadius="full"
+                mt={4}
+                mx="auto"
+              />
+            )}
           </FormControl>
         </ModalBody>
         <ModalFooter>
           <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
-            Create
+            {t("myOrganizations.create_organization.create")}
           </Button>
-          <Button onClick={onClose}>Cancel</Button>
+          <Button onClick={onClose}>
+            {t("myOrganizations.create_organization.cancel")}
+          </Button>
         </ModalFooter>
       </ModalContent>
     </Modal>

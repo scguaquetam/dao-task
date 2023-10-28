@@ -49,19 +49,30 @@ const NavLink = (props: Props) => {
 };
 
 export default function Nav() {
+  const router = useRouter();
+  const { t, i18n } = useTranslation();
   const { colorMode, toggleColorMode } = useColorMode();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { isConnected, isDisconnected } = useAccount();
   const [loaded, setLoaded] = useState(false);
-  const { t, i18n } = useTranslation();
-  const router = useRouter();
-  const changeLanguage = (lng: string) => {
-    i18n.changeLanguage(lng);
-  };
+  const [imageSrc, setImageSrc] = useState("/images/eng_flag.png");
+  
   useEffect(() => {
     if (isConnected) setLoaded(true);
     if (isDisconnected) setLoaded(false);
   }, [isConnected, isDisconnected]);
+
+  useEffect(() => {
+    setImageSrc(
+      i18n.language === "en" ? "/images/eng_flag.png" : "/images/esp_flag.png"
+    );
+  }, [i18n.language]);
+
+  const changeLanguage = (lng: string) => {
+    console.log('lng', lng);
+
+    i18n.changeLanguage(lng);
+  };
   return (
     <>
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
@@ -125,11 +136,7 @@ export default function Nav() {
               <Menu>
                 <MenuButton as={Button}>
                   <Image
-                    src={
-                      i18n.language === "en"
-                        ? "/images/eng_flag.png"
-                        : "/images/esp_flag.png"
-                    }
+                    src={imageSrc}
                     alt={i18n.language === "en" ? "England Flag" : "Spain Flag"}
                     boxSize="30px" // Ajusta el tamaño según prefieras
                   />

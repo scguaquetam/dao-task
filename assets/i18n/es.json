@@ -12,7 +12,7 @@
     }
   },
   "sidebar": {
-    "myOrganizations": "Mis organizaciones",
+    "myOrganizations": "Organizaciones",
     "my_task_boart" : "Mis tareas",
     "inbox" : "Bandeja de entrada",
     "bookmarks" : "Marcadores",
@@ -31,6 +31,17 @@
       "organization" : "Organización",
       "contributors" : "Contribuidores",
       "moderators" : "Moderadores"
+    },
+    "create_organization" : {
+      "title" : "Crear organización",
+      "name" : "Nombre",
+      "description" : "Descripción",
+      "create" : "Crear",
+      "cancel" : "Cancelar",
+      "image" : "Imagen",
+      "pickImage" : "Seleccionar imagen",
+      "visit" : "Visitar organización",
+      "close" : "Cerrar"
     }
   }
 }

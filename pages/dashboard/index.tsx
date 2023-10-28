@@ -14,10 +14,12 @@ import KanbanComponent from "../../components/dashboard/KanbanComponent";
 import { getHeader } from "../../utils/helpers";
 import { DashboardViewIndex } from "../../enums/enums";
 import MyOrganizations from "../../components/dashboard/MyOrganizations";
+import { useTranslation } from "react-i18next";
 
 const Dashboard = () => {
   const router = useRouter();
   const toast = useToast();
+  const { t, i18n } = useTranslation();
   const { isConnected, isDisconnected, address } = useAccount();
   const { openConnectModal, connectModalOpen } = useConnectModal();
   const { id } = router.query;
@@ -47,7 +49,9 @@ const Dashboard = () => {
 
     console.log(id);
   }, [id]);
-
+  useEffect(() => {
+    console.log(i18n.language);
+  }, [i18n.language]);
   const onLogin = async () => {
     try {
       const response = await login({

@@ -35,7 +35,7 @@ const OrganizationsTable = ({ orgs }: MyOrganizationsTableProps) => {
           </Thead>
           <Tbody>
             {orgs.map((org, index) => (
-              <Tr>
+              <Tr key={index}>
                 <Td>
                   <Avatar 
                     size="sm" 

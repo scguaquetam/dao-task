@@ -1,5 +1,6 @@
-"use client";
-
+import { ReactNode, useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import { useTranslation } from "react-i18next";
 import {
   IconButton,
   Avatar,
@@ -26,20 +27,10 @@ import {
   Image,
 } from "@chakra-ui/react";
 import {
-  FiHome,
-  FiTrendingUp,
-  FiCompass,
-  FiStar,
-  FiSettings,
   FiMenu,
   FiBell,
   FiChevronDown,
 } from "react-icons/fi";
-import { IconType } from "react-icons";
-import { useRouter } from "next/router";
-import { ReactNode } from "react";
-import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-import { useTranslation } from "react-i18next";
 import {
   FaBookmark,
   FaClipboardList,
@@ -47,6 +38,9 @@ import {
   FaEye,
   FaUser,
 } from "react-icons/fa";
+
+import { IconType } from "react-icons";
+import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import i18n from "../../config/i18n";
 
 interface LinkItemProps {
@@ -141,9 +135,19 @@ const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
 
 const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   const { colorMode, toggleColorMode } = useColorMode();
-  const { t, i18n } = useTranslation();
-  const changeLanguage = (lng: string) => {
-    i18n.changeLanguage(lng);
+  const { i18n } = useTranslation();
+  const [imageSrc, setImageSrc] = useState("/images/eng_flag.png");
+
+  useEffect(() => {
+    setImageSrc(
+      i18n.language === "en" ? "/images/eng_flag.png" : "/images/esp_flag.png"
+    );
+  }, [i18n.language]);
+
+  const changeLanguage = async (lng: string) => {
+    await i18n.changeLanguage(lng);
+    
+    console.log('lng', lng);
   };
   return (
     <Flex
@@ -230,12 +234,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
           <Menu>
             <MenuButton as={Button}>
               <Image
-                src={
-                  i18n.language === "en"
-                    ? "/images/eng_flag.png"
-                    : "/images/esp_flag.png"
-                }
-                alt={i18n.language === "en" ? "England Flag" : "Spain Flag"}
+                src={imageSrc}
                 boxSize="30px" // Ajusta el tamaño según prefieras
               />
             </MenuButton>
