@@ -1,31 +1,41 @@
 import React, { use, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { useMutation } from "@apollo/client";
 import { useAccount } from "wagmi";
 import { useConnectModal } from "@rainbow-me/rainbowkit";
-import { Button, useToast } from "@chakra-ui/react";
+import { useToast } from "@chakra-ui/react";
 
 import { CREATE_USER } from "../../graphql/createUser.graphql";
 import { UPDATE_USER } from "../../graphql/updateUser.graphql";
 import { LOGIN } from "../../graphql/login";
 
-import { LoginModal } from "../../components/modal/LoginModal";
-import { useRouter } from "next/router";
+import { LoginModal } from "../../components/modal/Login.modal";
 import KanbanComponent from "../../components/dashboard/KanbanComponent";
 import { getHeader } from "../../utils/helpers";
+import { DashboardViewIndex } from "../../enums/enums";
+import MyOrganizations from "../../components/dashboard/MyOrganizations";
 
 const Dashboard = () => {
   const router = useRouter();
   const toast = useToast();
   const { isConnected, isDisconnected, address } = useAccount();
   const { openConnectModal, connectModalOpen } = useConnectModal();
-  const { dashboardId } = router.query;
+  const { id } = router.query;
   const [signUp, { data, loading, error }] = useMutation(CREATE_USER);
-  const [updateUser, { data : updateData, loading: updateLoading, error: updateError }] = useMutation(UPDATE_USER);
-  const [login, { data: loginData, loading: loginLoading, error: loginError }] = useMutation(LOGIN);
+  const [
+    updateUser,
+    { data: updateData, loading: updateLoading, error: updateError },
+  ] = useMutation(UPDATE_USER);
+  const [login, { data: loginData, loading: loginLoading, error: loginError }] =
+    useMutation(LOGIN);
+  const [dashboardViewIndex, setDashboardViewIndex] =
+    useState<DashboardViewIndex>(DashboardViewIndex.ORGANIZATIONS);
   const [isRegistered, setIsRegistered] = useState<boolean>(false);
-  const [nickname, setNickname] = useState<string>("");
   const [errorCreating, setErrorCreating] = useState<string>("");
+  const [nickname, setNickname] = useState<string>("");
+  const [orgId, setOrgdId] = useState<string>("");
   const [signUpStep, setSignUpStep] = useState<number>(0);
+
   useEffect(() => {
     if (isDisconnected && openConnectModal) {
       openConnectModal();
@@ -33,12 +43,11 @@ const Dashboard = () => {
     onLogin();
   }, [isConnected, isDisconnected, connectModalOpen]);
   useEffect(() => {
-    if(!dashboardId || dashboardId === undefined) return
-    
-    console.log(dashboardId);
-    
-  }, [dashboardId])
-  
+    if (!id || id === undefined) return;
+
+    console.log(id);
+  }, [id]);
+
   const onLogin = async () => {
     try {
       const response = await login({
@@ -48,7 +57,7 @@ const Dashboard = () => {
           },
         },
       });
-      setIsRegistered(true)
+      setIsRegistered(true);
     } catch (error) {
       console.error(error);
     }
@@ -65,11 +74,11 @@ const Dashboard = () => {
       });
       console.log("response is ", response);
       setSignUpStep(1);
-      const token = response?.data?.signUp?.token
-      localStorage.setItem('token', token)
-    } catch (e : any) {
-      console.log(error?.message)
-      if(!error?.message|| error?.message === undefined ) return
+      const token = response?.data?.signUp?.token;
+      localStorage.setItem("token", token);
+    } catch (e: any) {
+      console.log(error?.message);
+      if (!error?.message || error?.message === undefined) return;
       setErrorCreating(error?.message);
       toast({
         title: error?.message,
@@ -78,7 +87,7 @@ const Dashboard = () => {
         isClosable: true,
       });
     }
-  }
+  };
   const pickRole = async (role: string) => {
     try {
       console.log("role is ", role);
@@ -89,12 +98,12 @@ const Dashboard = () => {
             primaryRol: role,
           },
         },
-        context: getHeader()
+        context: getHeader(),
       });
       console.log("response is ", response);
-      setIsRegistered(true)
+      setIsRegistered(true);
     } catch (error) {
-      console.error('error is ', error);
+      console.error("error is ", error);
       toast({
         title: "Error picking user role, please try again later.",
         status: "error",
@@ -102,10 +111,15 @@ const Dashboard = () => {
         isClosable: true,
       });
     }
+  };
+  if (dashboardViewIndex === DashboardViewIndex.ORGANIZATIONS && id) {
+    return <KanbanComponent />;
   }
   return isRegistered ? (
     <>
-      <KanbanComponent/>
+      {dashboardViewIndex === DashboardViewIndex.ORGANIZATIONS && (
+        <MyOrganizations />
+      )}
     </>
   ) : (
     <LoginModal

@@ -24,3 +24,10 @@ export enum ColumnType {
 export enum ItemType {
   TASK = 'Task',
 }
+
+export enum DashboardViewIndex {
+  ORGANIZATIONS = 'organizations',
+  TASKS = 'tasks',
+  INBOX = 'inbox',
+  BOOKMARKS = 'bookmarks'
+}
