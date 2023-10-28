@@ -19,7 +19,7 @@
     "profiles" : "Perfiles"
   },
   "myOrganizations" : {
-    "title": "Organizaciones en Axia",
+    "title": "Organizaciones",
     "filterBy" : "Filtrar por",
     "admin" : "Administrador",
     "member" : "Miembro",

@@ -14,6 +14,12 @@ import {
   Textarea,
   Image,
 } from "@chakra-ui/react";
+import { storage } from "../../firebase.config"
+import {
+	ref as fireRef,
+	uploadBytesResumable,
+	getDownloadURL
+} from 'firebase/storage'
 
 type CreateOrganizationModalProps = {
   isOpen: boolean;
@@ -29,12 +35,18 @@ const CreateOrganizationModal: React.FC<CreateOrganizationModalProps> = ({
   const [image, setImage] = useState<string | null>(null);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files[0]) {
+    const file: File | null = e.target.files ? e.target.files[0] : null
+    if (file) {
+      const validImageTypes = ['image/jpeg', 'image/png', 'image/gif']
+			if (file && !validImageTypes.includes(file.type)) {
+				alert('Please select a valid image type (jpg, png, gif).')
+				return
+			}
       const reader = new FileReader();
       reader.onloadend = () => {
         setImage(reader.result as string);
       };
-      reader.readAsDataURL(e.target.files[0]);
+      reader.readAsDataURL(file);
     }
   };
 

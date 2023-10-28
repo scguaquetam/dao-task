@@ -1,4 +1,5 @@
 import {
+  Avatar,
   Card,
   Table,
   TableCaption,
@@ -35,6 +36,13 @@ const OrganizationsTable = ({ orgs }: MyOrganizationsTableProps) => {
           <Tbody>
             {orgs.map((org, index) => (
               <Tr>
+                <Td>
+                  <Avatar 
+                    size="sm" 
+                    name={org.name} 
+                    src={org.img || "/images/standarAvatar.png"} 
+                  />
+                </Td>
                 <Td>{org.name}</Td>
                 <Td isNumeric>{org.users.length}</Td>
                 <Td isNumeric>3</Td>

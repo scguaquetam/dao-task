@@ -7,4 +7,5 @@ export interface Organization {
   description : string;
   users : User[];
   epochs? : Epoch[];
+  img? : string;
 }
