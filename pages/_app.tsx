@@ -22,6 +22,9 @@ import apolloClient from "../apollo-client";
 import "../styles/globals.css";
 import { I18nextProvider } from "react-i18next";
 import i18n from "../config/i18n";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
@@ -56,11 +59,13 @@ function MyApp({ Component, pageProps }: AppProps) {
         <ApolloProvider client={apolloClient}>
           <RainbowKitProvider chains={chains}>
             <ChakraProvider theme={theme}>
-              <I18nextProvider i18n={i18n}>
-                <Layout>
-                  <Component {...pageProps} />
-                </Layout>
-              </I18nextProvider>
+              <QueryClientProvider client={queryClient}>
+                <I18nextProvider i18n={i18n}>
+                  <Layout>
+                    <Component {...pageProps} />
+                  </Layout>
+                </I18nextProvider>
+              </QueryClientProvider>
             </ChakraProvider>
           </RainbowKitProvider>
         </ApolloProvider>
