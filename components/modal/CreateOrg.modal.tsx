@@ -47,7 +47,7 @@ const CreateOrganizationModal: React.FC<CreateOrganizationModalProps> = ({
   const [image, setImage] = useState<string | null>(null)
   const [file, setFile] = useState<File | null>(null)
   const [loading, setLoading] = useState<boolean>(false)
-  const [created, setCreated] = useState<boolean>(true)
+  const [created, setCreated] = useState<boolean>(false)
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile: File | null = e.target.files ? e.target.files[0] : null
     if (selectedFile) {
@@ -104,7 +104,10 @@ const CreateOrganizationModal: React.FC<CreateOrganizationModalProps> = ({
     }
   };
   const visitOrg = () => {
-    if(!newOrgId) window.location.reload()
+    if(!newOrgId) {
+      setCreated(false)
+      onClose()
+    }
     router.push(`dashboard?id=${newOrgId}`);
   };
   if (created) {
@@ -155,6 +158,7 @@ const CreateOrganizationModal: React.FC<CreateOrganizationModalProps> = ({
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
+					    disabled={loading}
             />
           </FormControl>
           <FormControl mb={4}>
@@ -164,6 +168,7 @@ const CreateOrganizationModal: React.FC<CreateOrganizationModalProps> = ({
             <Textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
+              disabled={loading}
             />
           </FormControl>
           <FormControl mb={4} alignItems="center" justifyContent="center">
@@ -192,7 +197,7 @@ const CreateOrganizationModal: React.FC<CreateOrganizationModalProps> = ({
           </FormControl>
         </ModalBody>
         <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={handleSubmit}>
+          <Button colorScheme="blue" mr={3} onClick={handleSubmit} isLoading={loading}>
             {t("myOrganizations.create_organization.create")}
           </Button>
           <Button onClick={onClose}>
