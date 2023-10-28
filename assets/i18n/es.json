@@ -12,10 +12,25 @@
     }
   },
   "sidebar": {
-    "discover": "Descubre",
-    "my_task_boart" : "Mi tablero de tareas",
+    "myOrganizations": "Mis organizaciones",
+    "my_task_boart" : "Mis tareas",
     "inbox" : "Bandeja de entrada",
     "bookmarks" : "Marcadores",
     "profiles" : "Perfiles"
+  },
+  "myOrganizations" : {
+    "title": "Organizaciones",
+    "filterBy" : "Filtrar por",
+    "admin" : "Administrador",
+    "member" : "Miembro",
+    "noItems": "No tienes organizaciones para mostrar",
+    "create": "Crear organización",
+    "yourOrganizations" : "Tus Organizaciones",
+    "publicOrganizations" : "Organizaciones Públicas",
+    "table" : {
+      "organization" : "Organización",
+      "contributors" : "Contribuidores",
+      "moderators" : "Moderadores"
+    }
   }
 }

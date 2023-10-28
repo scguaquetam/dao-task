@@ -12,10 +12,25 @@
     }
   },
   "sidebar": {
-    "discover": "Discover",
-    "my_task_boart" : "My Task Board",
+    "myOrganizations": "My organizations",
+    "my_task_boart" : "My Tasks",
     "inbox" : "Inbox",
     "bookmarks" : "Bookmarks",
     "profiles" : "Profiles"
+  },
+  "myOrganizations" : {
+    "title": "Organizations",
+    "filterBy" : "Filter by",
+    "admin" : "Admin",
+    "member" : "Member",
+    "noItems" : "No items found",
+    "create" : "Create organization",
+    "yourOrganizations" : "Your Organizations",
+    "publicOrganizations" : "Public Organizations",
+    "table" : {
+      "organization" : "Organization",
+      "contributors" : "Contributors",
+      "moderators" : "Moderators"
+    }
   }
 }

@@ -71,11 +71,10 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   const { t } = useTranslation();
 
   const LinkItems: Array<LinkItemProps> = [
-    { name: t("sidebar.discover"), icon: FaEye },
+    { name: t("sidebar.myOrganizations"), icon: FaEye },
     { name: t("sidebar.my_task_boart"), icon: FaClipboardList },
     { name: t("sidebar.inbox"), icon: FaComments },
     { name: t("sidebar.bookmarks"), icon: FaBookmark },
-    { name: t("sidebar.profiles"), icon: FaUser },
   ];
   return (
     <Box
@@ -226,6 +225,8 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               <MenuItem>Sign out</MenuItem>
             </MenuList>
           </Menu>
+        </Flex>
+        <Flex alignItems={"center"}>
           <Menu>
             <MenuButton as={Button}>
               <Image

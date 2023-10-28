@@ -2,7 +2,7 @@ import '@rainbow-me/rainbowkit/styles.css';
 import { getDefaultWallets, RainbowKitProvider } from '@rainbow-me/rainbowkit';
 import type { AppProps } from 'next/app';
 import { configureChains, createConfig, WagmiConfig } from 'wagmi';
-import { ApolloClient, InMemoryCache, ApolloProvider, NormalizedCacheObject } from "@apollo/client";
+import { ApolloProvider } from "@apollo/client";
 import {
   arbitrum,
   goerli,
@@ -16,6 +16,7 @@ import { publicProvider } from 'wagmi/providers/public';
 import { ChakraProvider } from "@chakra-ui/react";
 import {theme} from '../config/theme'
 import Layout from '../components/app/Layout';
+import apolloClient from '../apollo-client';
 import '../styles/globals.css';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
@@ -53,10 +54,6 @@ const wagmiConfig = createConfig({
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const apolloClient: ApolloClient<NormalizedCacheObject> = new ApolloClient({
-    uri: "http://localhost:3000/graphql",
-    cache: new InMemoryCache(),
-  });
   return (
     <WagmiConfig config={wagmiConfig}>
       <DndProvider backend={HTML5Backend}>
