@@ -19,6 +19,11 @@ import Layout from '../components/app/Layout';
 import '../styles/globals.css';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
+
+
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
@@ -32,6 +37,7 @@ const { chains, publicClient, webSocketPublicClient } = configureChains(
   ],
   [publicProvider()]
 );
+
 
 const { connectors } = getDefaultWallets({
   appName: 'RainbowKit App',
@@ -57,9 +63,11 @@ function MyApp({ Component, pageProps }: AppProps) {
       <ApolloProvider client={apolloClient}>
         <RainbowKitProvider chains={chains}>
           <ChakraProvider theme={theme}>
+          <QueryClientProvider client={queryClient}>
             <Layout>
               <Component {...pageProps} />
             </Layout>
+            </QueryClientProvider>
           </ChakraProvider>
         </RainbowKitProvider>
       </ApolloProvider>
