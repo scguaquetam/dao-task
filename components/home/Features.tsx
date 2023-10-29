@@ -4,6 +4,7 @@ import {
   Container,
   Flex,
   Heading,
+  Image,
   Icon,
   Stack,
   Text,
@@ -12,99 +13,81 @@ import {
 import { ReactElement } from 'react'
 import { useTranslation } from 'react-i18next'
 import i18n from "i18next";
-import {
-  FcAbout,
-  FcAssistant,
-  FcCollaboration,
-  FcDonate,
-  FcManager,
-} from 'react-icons/fc'
+import Committee from '../../public/images/Committee.png'
+import DAO from '../../public/images/DAO.png'
+import { StaticImageData } from 'next/image';
 
 interface CardProps {
   heading: string
   description: string
-  icon: ReactElement
+  imagePath: StaticImageData
   href: string
 }
 
-const Card = ({ heading, description, icon, href }: CardProps) => {
+
+
+const Card = ({ heading, description, imagePath, href }: CardProps) => {
+  const textColor = useColorModeValue('gray.500', 'gray.300'); 
+  const headingColor = useColorModeValue('#3107DA', 'white');
+
   return (
-    <Box
-      maxW={{ base: 'full', md: '275px' }}
-      w={'full'}
-      borderWidth="1px"
-      borderRadius="lg"
-      overflow="hidden"
-      p={5}>
-      <Stack align={'start'} spacing={2}>
-        <Flex
-          w={16}
-          h={16}
-          align={'center'}
-          justify={'center'}
-          color={'white'}
-          rounded={'full'}
-          bg={useColorModeValue('gray.100', 'gray.700')}>
-          {icon}
-        </Flex>
-        <Box mt={2}>
-          <Heading size="md">{heading}</Heading>
-          <Text mt={1} fontSize={'sm'}>
-            {description}
-          </Text>
-        </Box>
-        <Button variant={'link'} colorScheme={'blue'} size={'sm'}>
-          Learn more
-        </Button>
-      </Stack>
+<Box
+  maxW={{ base: 'full', md: '450px' }}
+  w="full"
+  display="flex" 
+  justifyContent="space-between" 
+  borderWidth="1px"
+  borderRadius="lg"
+  overflow="hidden"
+  px={6}
+  pt={6}
+  pb={10}
+  
+>
+  <Stack align="start" spacing={2} width="70%">
+    <Box mt={2}>
+      <Heading size="md" py={2} color={headingColor}>{heading}</Heading>
+      <Text mt={1} fontSize="sm" color={textColor}>
+        {description}
+      </Text>
     </Box>
+  </Stack>
+  <Flex
+    width="30%"
+    align="center"
+    justify="center"
+    maxH={110}
+  >
+    <Image src={imagePath.src} alt={heading} w="100%" h="100%" />
+  </Flex>
+</Box>
   )
 }
 
 export default function Features() {
 	const { t } = useTranslation()
+  const textColor = useColorModeValue('gray.500', 'gray.300'); 
+const headingColor = useColorModeValue('#3107DA', 'white');
   return (
     <Box p={4}>
-      <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'}>
-        <Heading fontSize={{ base: '2xl', sm: '4xl' }} fontWeight={'bold'}>
-          {t('test')}
+      <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'} mt={'10'}>
+        <Heading fontSize={{ base: '2xl', sm: '4xl' }} fontWeight={'bold'} color={headingColor}>
+          {t('How Axia works')}
         </Heading>
-        <Text color={'gray.600'} fontSize={{ base: 'sm', sm: 'lg' }}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Reiciendis obcaecati ut
-          cupiditate pariatur, dignissimos, placeat amet officiis.
-        </Text>
       </Stack>
 
       <Container maxW={'5xl'} mt={12}>
         <Flex flexWrap="wrap" gridGap={6} justify="center">
           <Card
-            heading={'Heading'}
-            icon={<Icon as={FcAssistant} w={10} h={10} />}
-            description={'Lorem ipsum dolor sit amet catetur, adipisicing elit.'}
+            heading={'Launch a DAO'}
+            imagePath={DAO}
+            description={'Create value in your community, easily identify contributors, resolve disputes, and make the contribution way transparent'}
             href={'#'}
           />
           <Card
-            heading={'Heading'}
-            icon={<Icon as={FcCollaboration} w={10} h={10} />}
-            description={'Lorem ipsum dolor sit amet catetur, adipisicing elit.'}
-            href={'#'}
-          />
-          <Card
-            heading={'Heading'}
-            icon={<Icon as={FcDonate} w={10} h={10} />}
-            description={'Lorem ipsum dolor sit amet catetur, adipisicing elit.'}
-            href={'#'}
-          />
-          <Card
-            heading={'Heading'}
-            icon={<Icon as={FcManager} w={10} h={10} />}
-            description={'Lorem ipsum dolor sit amet catetur, adipisicing elit.'}
-            href={'#'}
-          />
-          <Card
-            heading={'Heading'}
-            icon={<Icon as={FcAbout} w={10} h={10} />}
-            description={'Lorem ipsum dolor sit amet catetur, adipisicing elit.'}
+            heading={'Elect a Moderator Commitee'}
+            imagePath={Committee}
+            description={'All DAO members have equal voting power to choose the members of the moderator committee, who will resolve disputes and maintain harmony in the organization.'}
             href={'#'}
           />
         </Flex>
