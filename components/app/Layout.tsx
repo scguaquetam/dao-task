@@ -25,6 +25,7 @@ import {
   Button,
   useColorMode,
   Image,
+  Heading,
 } from "@chakra-ui/react";
 import { FiMenu, FiBell, FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { FaClipboardList, FaEye } from "react-icons/fa";
@@ -55,11 +56,12 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   const { t } = useTranslation();
   const { data } = useQuery(FETCH_ORGANIZATIONS);
   const [showOrganizations, setShowOrganizations] = useState(true);
+  const [showDisputes, setShowDisputes] = useState(true);
   const [orgs, setOrgs] = useState<Organization[]>([]);
 
   useEffect(() => {
     if (!data) return;
-    setOrgs(data.organizationsByUser);
+    setOrgs(data.organizationOfUser);
   }, [data]);
 
   return (
@@ -77,18 +79,26 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
         <Image src={"/images/logo.png"} maxH={20} maxW={100} alt="Logo" />
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
-      <VStack align="start">
-        <Flex align="center" justify="space-between">
-          <NavItem icon={FaEye} linkTo={"dashboard"}>
-            {t("sidebar.myOrganizations")}
+      <VStack align="start" mb={8}>
+        <Flex align="center" justify="start" w={"100%"}>
+          <NavItem icon={FaEye} linkTo={"dashboard"} ml={0}>
+            <Heading
+              fontSize={{ base: "md", sm: "sm", md: "md" }}
+              fontWeight="bold"
+              bgGradient="linear(to-l, #3107DA, #5E39F1)"
+              bgClip="text"
+            >
+              {t("sidebar.myOrganizations")}
+            </Heading>
           </NavItem>
           <IconButton
+            ml={0}
             aria-label="Toggle organizations"
             icon={showOrganizations ? <FiChevronUp /> : <FiChevronDown />}
             onClick={() => setShowOrganizations(!showOrganizations)}
           />
         </Flex>
-        {showOrganizations &&
+        {orgs && showOrganizations &&
           orgs.map((org) => (
             <Link href={`/dashboard?id=${org.id}`} key={org.id}>
               <Box
@@ -105,9 +115,69 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
             </Link>
           ))}
       </VStack>
-      <NavItem icon={FaClipboardList} linkTo={"myTasks"}>
-        {t("sidebar.my_task_board")}
-      </NavItem>
+      <VStack align="start">
+        <Flex align="center" justify="start" w={"100%"}>
+          <NavItem icon={FaEye} linkTo={"dashboard"} ml={0}>
+            <Heading
+              fontSize={{ base: "md", sm: "sm", md: "md" }}
+              fontWeight="bold"
+              bgGradient="linear(to-l, #3107DA, #5E39F1)"
+              bgClip="text"
+            >
+              {t("sidebar.disputes")}
+            </Heading>
+          </NavItem>
+          <IconButton
+            ml={0}
+            aria-label="Toggle disputes"
+            icon={showDisputes ? <FiChevronUp /> : <FiChevronDown />}
+            onClick={() => setShowDisputes(!showDisputes)}
+          />
+        </Flex>
+        {showDisputes && (
+          // orgs.map((org) => (
+          //   <Link href={`/dispute?id=${org.id}`} key={org.id}>
+          //     <Box
+          //       ml={10}
+          //       key={org.id}
+          //       _hover={{
+          //         bg: "cyan.400",
+          //         color: "white",
+          //       }}
+          //     >
+          //       {" "}
+          //       {org.name}
+          //     </Box>
+          //   </Link>
+          // ))
+          <>
+            <Link href={`/dispute?id=123`}>
+              <Box
+                ml={10}
+                _hover={{
+                  bg: "cyan.400",
+                  color: "white",
+                }}
+              >
+                {" "}
+                {"dispute 1"}
+              </Box>
+            </Link>
+            <Link href={`/dispute?id=123`}>
+              <Box
+                ml={10}
+                _hover={{
+                  bg: "cyan.400",
+                  color: "white",
+                }}
+              >
+                {" "}
+                {"dispute 2"}
+              </Box>
+            </Link>
+          </>
+        )}
+      </VStack>
     </Box>
   );
 };
@@ -162,8 +232,6 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 
   const changeLanguage = async (lng: string) => {
     await i18n.changeLanguage(lng);
-
-    console.log("lng", lng);
   };
   return (
     <Flex

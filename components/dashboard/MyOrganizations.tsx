@@ -33,7 +33,7 @@ const MyOrganizations = () => {
   }, [data]);
   useEffect(() => {
     if (!myOrgsData) return;
-    setMyOrgs(myOrgsData.organizationsByUser);
+    setMyOrgs(myOrgsData.organizationOfUser);
   }, [myOrgsData]);
 
   return (

@@ -1,14 +1,10 @@
 import { gql } from "@apollo/client";
 
 export const FETCH_ORGANIZATIONS = gql`
-  query OrganizationsByUser {
-    organizationsByUser {
-      id
+  query OrganizationOfUser {
+    organizationOfUser {
       name
-      description
-      users {
-        nickname
-      }
+      id
     }
   }
 `;

@@ -41,6 +41,7 @@ const Dashboard = () => {
   useEffect(() => {
     if (isDisconnected && openConnectModal) {
       openConnectModal();
+      return
     }
     onLogin();
   }, [isConnected, isDisconnected, connectModalOpen]);
@@ -48,6 +49,8 @@ const Dashboard = () => {
     if (!id || id === undefined) return;
   }, [id]);
   const onLogin = async () => {
+    console.log('login');
+    
     try {
       const response = await login({
         variables: {
@@ -57,6 +60,7 @@ const Dashboard = () => {
         },
       });
       setIsRegistered(true);
+      localStorage.setItem("token", response.data.login.token);
     } catch (error) {
       console.error(error);
     }
@@ -109,7 +113,9 @@ const Dashboard = () => {
     }
   };
   if (dashboardViewIndex === DashboardViewIndex.ORGANIZATIONS && id) {
-    return <KanbanComponent />;
+    return <KanbanComponent 
+      id={id as string}
+    />;
   }
   return isRegistered ? (
     <>

@@ -56,7 +56,7 @@ export default function Nav() {
   const { isConnected, isDisconnected } = useAccount();
   const [loaded, setLoaded] = useState(false);
   const [imageSrc, setImageSrc] = useState("/images/eng_flag.png");
-  
+
   useEffect(() => {
     if (isConnected) setLoaded(true);
     if (isDisconnected) setLoaded(false);
@@ -75,8 +75,7 @@ export default function Nav() {
     <>
       <Box bg={useColorModeValue("gray.100", "gray.900")} px={4}>
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
-          <Box>Logo</Box>
-
+          <Image src={"/images/logo.png"} maxH={'100px'}  alt="Logo" mt={4} />
           <Flex alignItems={"center"}>
             <Stack direction={"row"} spacing={7}>
               <Button onClick={toggleColorMode}>

@@ -7,9 +7,6 @@ export const FETCH_ALL_ORGANIZATIONS = gql`
       name
       img
       moderatorsNumber
-      users {
-        id
-      }
     }
   }
 `;

@@ -16,7 +16,8 @@
     "my_task_board" : "My Tasks",
     "inbox" : "Inbox",
     "bookmarks" : "Bookmarks",
-    "profiles" : "Profiles"
+    "profiles" : "Profiles",
+    "disputes" : "Disputes"
   },
   "myOrganizations" : {
     "title": "Explore DAOs",
@@ -47,5 +48,8 @@
       "visit" : "Visit DAO",
       "close" : "Close"
     }
+  },
+  "dashboard" : {
+    "taskboardTitle" : "Task Board"
   }
 }
