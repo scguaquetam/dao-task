@@ -6,6 +6,7 @@ export interface Organization {
   name : string;
   description : string;
   users : User[];
+  moderatorsNumber : number;
   epochs? : Epoch[];
   img? : string;
 }

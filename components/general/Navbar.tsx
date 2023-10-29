@@ -69,8 +69,6 @@ export default function Nav() {
   }, [i18n.language]);
 
   const changeLanguage = (lng: string) => {
-    console.log('lng', lng);
-
     i18n.changeLanguage(lng);
   };
   return (

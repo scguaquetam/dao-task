@@ -73,8 +73,6 @@ const CreateOrganizationModal: React.FC<CreateOrganizationModalProps> = ({
         await uploadBytesResumable(fileRef, file);
         fileURL = await getDownloadURL(fileRef);
       }
-      console.log("fileurl is ", fileURL);
-
       const response = await createOrganization({
         variables: {
           createOrganizationInput: {
@@ -84,7 +82,6 @@ const CreateOrganizationModal: React.FC<CreateOrganizationModalProps> = ({
           },
         },
       });
-      console.log("response is ", response);
       setNewOrgId(response.data.createOrganization.id);
       setCreated(true);
       toast({
@@ -182,7 +179,7 @@ const CreateOrganizationModal: React.FC<CreateOrganizationModalProps> = ({
               id="fileInput"
             />
             <Button as="label" htmlFor="fileInput" colorScheme="cyan">
-              {file ? file.name : "Seleccione un archivo"}
+              {file ? file.name : t("myOrganizations.create_organization.pickImage")}
             </Button>
             {image && (
               <Image

@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Button,
   Card,
   Table,
   TableCaption,
@@ -11,41 +12,69 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import React from "react";
+import React, { useEffect } from "react";
 import { Organization } from "../../types/organization.types";
 import { useTranslation } from "react-i18next";
 type MyOrganizationsTableProps = {
   orgs: Organization[];
+  myOrgs: Organization[];
 };
 
-const OrganizationsTable = ({ orgs }: MyOrganizationsTableProps) => {
+const OrganizationsTable = ({ orgs, myOrgs }: MyOrganizationsTableProps) => {
   const { t } = useTranslation();
+  const isMemberOfOrg = (orgId: string) => {
+    return myOrgs.some((myOrg) => myOrg.id === orgId);
+  };
 
   return (
     <Card>
       <TableContainer>
         <Table variant="simple">
+          <TableCaption>{t("myOrganizations.table.tableInfo")}</TableCaption>
           <Thead>
             <Tr>
               <Th></Th>
               <Th>{t("myOrganizations.table.organization")}</Th>
               <Th isNumeric>{t("myOrganizations.table.contributors")}</Th>
               <Th isNumeric>{t("myOrganizations.table.moderators")}</Th>
+              <Th>{t("myOrganizations.table.actions")}</Th>
             </Tr>
           </Thead>
           <Tbody>
             {orgs.map((org, index) => (
               <Tr key={index}>
                 <Td>
-                  <Avatar 
-                    size="sm" 
-                    name={org.name} 
-                    src={org.img || "/images/standarAvatar.png"} 
+                  <Avatar
+                    size="sm"
+                    name={org.name}
+                    src={org.img || "/images/standarAvatar.png"}
                   />
                 </Td>
                 <Td>{org.name}</Td>
                 <Td isNumeric>{org.users.length}</Td>
-                <Td isNumeric>3</Td>
+                <Td isNumeric>{org.moderatorsNumber}</Td>
+                <Td>
+                  {!isMemberOfOrg(org.id) ? (
+                    <Button 
+                      colorScheme="blue" 
+                      size="sm" 
+                      mr={2}
+                      w="130px" 
+                      textAlign="center"
+                    >
+                      {t("myOrganizations.table.requestJoin")}
+                    </Button>
+                  ) : (
+                    <Button 
+                      colorScheme="teal" 
+                      size="sm"
+                      w="130px" 
+                      textAlign="center"
+                    >
+                      {t("myOrganizations.table.seeDetails")}
+                    </Button>
+                  )}
+                </Td>
               </Tr>
             ))}
           </Tbody>

@@ -26,31 +26,21 @@ import {
   useColorMode,
   Image,
 } from "@chakra-ui/react";
-import {
-  FiMenu,
-  FiBell,
-  FiChevronDown,
-} from "react-icons/fi";
-import {
-  FaBookmark,
-  FaClipboardList,
-  FaComments,
-  FaEye,
-  FaUser,
-} from "react-icons/fa";
+import { FiMenu, FiBell, FiChevronDown, FiChevronUp } from "react-icons/fi";
+import { FaClipboardList, FaEye } from "react-icons/fa";
 
 import { IconType } from "react-icons";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
-import i18n from "../../config/i18n";
-
-interface LinkItemProps {
-  name: string;
-  icon: IconType;
-}
+import { Organization } from "../../types/organization.types";
+import Link from "next/link";
+import { useQuery } from "@apollo/client";
+import { FETCH_ORGANIZATIONS } from "../../graphql/myOrganizations.graphql";
 
 interface NavItemProps extends FlexProps {
   icon: IconType;
   children: React.ReactNode;
+  linkTo: string;
+  organizations?: Organization[] | null;
 }
 
 interface MobileProps extends FlexProps {
@@ -63,13 +53,15 @@ interface SidebarProps extends BoxProps {
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   const { t } = useTranslation();
+  const { data } = useQuery(FETCH_ORGANIZATIONS);
+  const [showOrganizations, setShowOrganizations] = useState(true);
+  const [orgs, setOrgs] = useState<Organization[]>([]);
 
-  const LinkItems: Array<LinkItemProps> = [
-    { name: t("sidebar.myOrganizations"), icon: FaEye },
-    { name: t("sidebar.my_task_boart"), icon: FaClipboardList },
-    { name: t("sidebar.inbox"), icon: FaComments },
-    { name: t("sidebar.bookmarks"), icon: FaBookmark },
-  ];
+  useEffect(() => {
+    if (!data) return;
+    setOrgs(data.organizationsByUser);
+  }, [data]);
+
   return (
     <Box
       transition="3s ease"
@@ -82,25 +74,49 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
       {...rest}
     >
       <Flex h="20" alignItems="center" mx="8" justifyContent="center">
-        {" "}
-        {/* Modificar aquí */}
         <Image src={"/images/logo.png"} maxH={20} maxW={100} alt="Logo" />
         <CloseButton display={{ base: "flex", md: "none" }} onClick={onClose} />
       </Flex>
-      {LinkItems.map((link) => (
-        <NavItem key={link.name} icon={link.icon}>
-          {link.name}
-        </NavItem>
-      ))}
+      <VStack align="start">
+        <Flex align="center" justify="space-between">
+          <NavItem icon={FaEye} linkTo={"dashboard"}>
+            {t("sidebar.myOrganizations")}
+          </NavItem>
+          <IconButton
+            aria-label="Toggle organizations"
+            icon={showOrganizations ? <FiChevronUp /> : <FiChevronDown />}
+            onClick={() => setShowOrganizations(!showOrganizations)}
+          />
+        </Flex>
+        {showOrganizations &&
+          orgs.map((org) => (
+            <Link href={`/dashboard?id=${org.id}`} key={org.id}>
+              <Box
+                ml={10}
+                key={org.id}
+                _hover={{
+                  bg: "cyan.400",
+                  color: "white",
+                }}
+              >
+                {" "}
+                {org.name}
+              </Box>
+            </Link>
+          ))}
+      </VStack>
+      <NavItem icon={FaClipboardList} linkTo={"myTasks"}>
+        {t("sidebar.my_task_board")}
+      </NavItem>
     </Box>
   );
 };
 
-const NavItem = ({ icon, children, ...rest }: NavItemProps) => {
+const NavItem = ({ icon, children, linkTo, ...rest }: NavItemProps) => {
   return (
     <Box
       as="a"
-      href="#"
+      href={`/${linkTo}`}
       style={{ textDecoration: "none" }}
       _focus={{ boxShadow: "none" }}
     >
@@ -146,8 +162,8 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
 
   const changeLanguage = async (lng: string) => {
     await i18n.changeLanguage(lng);
-    
-    console.log('lng', lng);
+
+    console.log("lng", lng);
   };
   return (
     <Flex

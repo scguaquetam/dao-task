@@ -13,34 +13,38 @@
   },
   "sidebar": {
     "myOrganizations": "Organizations",
-    "my_task_boart" : "My Tasks",
+    "my_task_board" : "My Tasks",
     "inbox" : "Inbox",
     "bookmarks" : "Bookmarks",
     "profiles" : "Profiles"
   },
   "myOrganizations" : {
-    "title": "Organizations",
+    "title": "Explore DAOs",
     "filterBy" : "Filter by",
     "admin" : "Admin",
     "member" : "Member",
     "noItems" : "No items found",
-    "create" : "Create organization",
-    "yourOrganizations" : "Your Organizations",
-    "publicOrganizations" : "Public Organizations",
+    "create" : "Create DAO",
+    "yourOrganizations" : "Your DAOs",
+    "publicOrganizations" : "All DAOs",
     "table" : {
       "organization" : "Organization",
       "contributors" : "Contributors",
-      "moderators" : "Moderators"
+      "moderators" : "Moderators",
+      "actions" : "Actions",
+      "requestJoin" : "Request to join",
+      "seeDetails" : "See details",
+      "tableInfo" : "You must be a member to see its details."
     },
     "create_organization" : {
-      "title" : "Create organization",
+      "title" : "Create DAO",
       "name" : "Name",
       "description" : "Description",
       "create" : "Create",
       "cancel" : "Cancel",
       "image" : "Image",
       "pickImage" : "Pick image",
-      "visit" : "Visit organization",
+      "visit" : "Visit DAO",
       "close" : "Close"
     }
   }

@@ -3,115 +3,39 @@ import { useTranslation } from "react-i18next";
 import { useQuery } from "@apollo/client";
 import {
   Heading,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
   Button,
   Box,
   Flex,
-  SimpleGrid,
   useDisclosure,
   Card,
   CardBody,
-  Text,
   Input,
   CardHeader,
 } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 
 import { Organization } from "../../types/organization.types";
-import { FETCH_ORGANIZATIONS } from "../../graphql/myOrganizations.graphql";
-import OrganizationObject from "./OrganizationObject";
 import CreateOrganizationModal from "../modal/CreateOrg.modal";
 import OrganizationsTable from "./OrganizationsTable";
-
-const organizations: Organization[] = [
-  {
-    id: "1",
-    name: "Organization 1",
-    description: "This is organization 1",
-    users: [
-      {
-        nickname: "User 1",
-      },
-      {
-        nickname: "User 2",
-      },
-    ],
-    epochs: [],
-  },
-  {
-    id: "2",
-    name: "Organization 2",
-    description: "This is organization 2",
-    users: [
-      {
-        nickname: "Andrea",
-      },
-      {
-        nickname: "Carla",
-      },
-    ],
-    epochs: [],
-  },
-  {
-    id: "3",
-    name: "Organization 3",
-    description: "This is organization 3",
-    users: [
-      {
-        nickname: "User 1",
-      },
-      {
-        nickname: "User 2",
-      },
-    ],
-    epochs: [],
-  },
-  {
-    id: "4",
-    name: "Organization 4",
-    description: "This is organization 4",
-    users: [
-      {
-        nickname: "Andrea",
-      },
-    ],
-    epochs: [],
-  },
-  {
-    id: "5",
-    name: "Organization 5",
-    description: "This is organization 5",
-    users: [
-      {
-        nickname: "User 1",
-      },
-      {
-        nickname: "User 2",
-      },
-    ],
-    epochs: [],
-  },
-];
+import { FETCH_ALL_ORGANIZATIONS } from "../../graphql/allOrganizations.graphql";
+import { FETCH_ORGANIZATIONS } from "../../graphql/myOrganizations.graphql";
 
 const MyOrganizations = () => {
   const { t, i18n } = useTranslation();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { data } = useQuery(FETCH_ORGANIZATIONS);
+  const { data } = useQuery(FETCH_ALL_ORGANIZATIONS);
+  const { data : myOrgsData } = useQuery(FETCH_ORGANIZATIONS);
   const [orgs, setOrgs] = useState<Organization[]>([]);
+  const [myOrgs, setMyOrgs] = useState<Organization[]>([]);
   useEffect(() => {
-    //test
-    setOrgs(organizations);
-    return;
-    //test
-    
     if (!data) return;
-    console.log(data.organizationsByUser);
-    setOrgs(data.organizationsByUser);
+    setOrgs(data.findAllOrgs);
   }, [data]);
-  
+  useEffect(() => {
+    if (!myOrgsData) return;
+    setMyOrgs(myOrgsData.organizationsByUser);
+  }, [myOrgsData]);
+
   return (
     <>
       <Box mt={4} mb={8}>
@@ -151,30 +75,8 @@ const MyOrganizations = () => {
         </Card>
       </Box>
       <Box mt={8}>
-        {orgs.length > 0 ? (
+        {orgs && orgs.length > 0 ? (
           <>
-            <Card mb={8}>
-              <CardHeader>
-                <Heading
-                  fontSize={{ base: "2xl", sm: "1xl", md: "2xl" }}
-                  fontWeight="bold"
-                  bgGradient="linear(to-l, #7928CA, #FF0080)"
-                  bgClip="text"
-                  flex="1"
-                  mr="2"
-                  textAlign={"center"}
-                >
-                  {t("myOrganizations.yourOrganizations")}
-                </Heading>
-              </CardHeader>
-              <CardBody>
-                <SimpleGrid columns={3} spacing={4} width="100%">
-                  {orgs.map((org, index) => (
-                    <OrganizationObject org={org} key={org.id} />
-                  ))}
-                </SimpleGrid>
-              </CardBody>
-            </Card>
             <Card>
               <CardHeader>
                 <Heading
@@ -190,7 +92,7 @@ const MyOrganizations = () => {
                 </Heading>
               </CardHeader>
               <CardBody>
-                <OrganizationsTable orgs={orgs} />
+                <OrganizationsTable orgs={orgs} myOrgs={myOrgs}/>
               </CardBody>
             </Card>
           </>

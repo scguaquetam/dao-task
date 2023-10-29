@@ -46,12 +46,7 @@ const Dashboard = () => {
   }, [isConnected, isDisconnected, connectModalOpen]);
   useEffect(() => {
     if (!id || id === undefined) return;
-
-    console.log(id);
   }, [id]);
-  useEffect(() => {
-    console.log(i18n.language);
-  }, [i18n.language]);
   const onLogin = async () => {
     try {
       const response = await login({
@@ -76,7 +71,6 @@ const Dashboard = () => {
           },
         },
       });
-      console.log("response is ", response);
       setSignUpStep(1);
       const token = response?.data?.signUp?.token;
       localStorage.setItem("token", token);
@@ -94,7 +88,6 @@ const Dashboard = () => {
   };
   const pickRole = async (role: string) => {
     try {
-      console.log("role is ", role);
       const response = await updateUser({
         variables: {
           updateUserInput: {
@@ -104,7 +97,6 @@ const Dashboard = () => {
         },
         context: getHeader(),
       });
-      console.log("response is ", response);
       setIsRegistered(true);
     } catch (error) {
       console.error("error is ", error);
