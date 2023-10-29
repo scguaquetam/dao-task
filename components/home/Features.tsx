@@ -36,13 +36,12 @@ const Card = ({ heading, description, imagePath, href }: CardProps) => {
   w="full"
   display="flex" 
   justifyContent="space-between" 
-  borderWidth="1px"
   borderRadius="lg"
   overflow="hidden"
   px={6}
   pt={6}
   pb={10}
-  
+  boxShadow='lg'
 >
   <Stack align="start" spacing={2} width="70%">
     <Box mt={2}>
@@ -66,8 +65,8 @@ const Card = ({ heading, description, imagePath, href }: CardProps) => {
 
 export default function Features() {
 	const { t } = useTranslation()
-  const textColor = useColorModeValue('gray.500', 'gray.300'); 
-const headingColor = useColorModeValue('#3107DA', 'white');
+
+  const headingColor = useColorModeValue('#3107DA', 'white');
   return (
     <Box p={4}>
       <Stack spacing={4} as={Container} maxW={'3xl'} textAlign={'center'} mt={'10'}>

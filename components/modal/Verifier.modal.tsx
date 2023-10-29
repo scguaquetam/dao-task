@@ -117,7 +117,7 @@ const VerifierModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
       </Heading>
 
       <Text fontSize="md" maxW="2xl" textAlign="center">
-        Each DAO has at least 1 "Admin" user that can send claim links to the people the DAO selected as part of the Committee. This will allow you to claim your DAO credential, after you get it, you can return to this page to prove your membership. If you haven't received a claim link, please get in touch with your DAO admin.
+      If you haven't received a claim link, please get in touch with your DAO admin.This will allow you to claim your DAO credential, after you get it, you can return to this page to prove your membership.
       </Text>
       <Text fontSize="sm" maxW="2xl" textAlign="center" fontWeight={"600"}>
         Download the app:
@@ -129,7 +129,7 @@ const VerifierModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
       bg="linear-gradient(#8a46ff,#3107DA)"
       color={"white"}
       _hover={{
-        bg: "#A83BDB",
+        bg: "#3107DA",
       }}
       onClick={() =>
         window.open("https://apps.apple.com/us/app/polygon-id/id1629870183")
