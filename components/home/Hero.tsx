@@ -14,9 +14,9 @@ import {
 
 export default function Hero() {
   const textColor = useColorModeValue('gray.500', 'gray.300'); 
-  const headingColor = useColorModeValue('#3107DA', 'white')// Cambia el color del texto
-  const buttonBgColor = useColorModeValue('#3107DA', 'white'); // Cambia el color del fondo del botón
-  const buttonHoverBgColor = useColorModeValue('#A83BDB', '#A83BDB'); // Cambia
+  const headingColor = useColorModeValue('#3107DA', 'white');
+  const buttonBgColor = useColorModeValue('#3107DA', 'white'); 
+  const buttonHoverBgColor = useColorModeValue('#A83BDB', '#A83BDB'); 
 
   return (
     <>
@@ -24,8 +24,8 @@ export default function Hero() {
         <Stack
           as={Box}
           textAlign={'center'}
-          spacing={{ base: 8, md: 4 }}
-          py={{ base: 20, md: 2 }}
+          spacing={{ base: 8, md: 8 }}
+          py={{ base: 20, md: 12 }}
           mx={{ base: 4, md: 2 }}>
           <Heading
             fontWeight={600}
@@ -39,7 +39,8 @@ export default function Hero() {
           fontSize={{ base: 'md', sm: 'md', md: 'xl' }}
           fontWeight={600}
            >
-          Create a template that fits the tasks of your own DAO and facilitates the way of contribution
+          Create a template that fits the tasks of your own DAO 
+          <br />and facilitates the way of contribution
           </Text>
           <Stack
             direction={'column'}
