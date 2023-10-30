@@ -6,12 +6,6 @@ export const CREATE_ORGANIZATION = gql`
   ) {
     createOrganization(createOrganizationInput: $createOrganizationInput) {
       id
-      name
-      description
-      img
-      users {
-        nickname
-      }
     }
   }
 `;

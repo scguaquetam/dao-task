@@ -6,21 +6,40 @@ export const ORGANIZATION_DETAIL = gql`
       id
       name
       description
-      moderatorsNumber
-      img
-      fieldsBase
-      users {
+      baseTasks {
         id
-        address
-        nickname
-        roles
+        title
+        description
+        status
+        value
+        createdAt
+        depending
       }
       epochs {
+        description
         duration
         endDate
-        startDate
         id
+        isActive
+        startDate
+        tasks {
+          id
+          title
+          description
+          status
+          value
+          createdAt
+          depending
+        }
       }
+      fieldsBase
+      img
+      organizationUsers {
+        id
+        nickname
+        role
+      }
+      moderatorsNumber
     }
   }
 `;

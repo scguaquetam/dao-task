@@ -29,10 +29,14 @@ const MyOrganizations = () => {
   const [myOrgs, setMyOrgs] = useState<Organization[]>([]);
   useEffect(() => {
     if (!data) return;
+    console.log('all orgs are ', data.findAllOrgs);
+    
     setOrgs(data.findAllOrgs);
   }, [data]);
   useEffect(() => {
     if (!myOrgsData) return;
+    console.log('my orgs are ', myOrgsData.organizationOfUser);
+    
     setMyOrgs(myOrgsData.organizationOfUser);
   }, [myOrgsData]);
 

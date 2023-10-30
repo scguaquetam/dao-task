@@ -14,6 +14,7 @@ function useTaskCollection() {
         title: 'Task 1',
         column: ColumnType.TO_DO,
         color: 'blue.300',
+        category : 'default'
       },
     ],
     'In Progress': [
@@ -22,6 +23,7 @@ function useTaskCollection() {
         column: ColumnType.IN_PROGRESS,
         title: 'Task 2',
         color: 'yellow.300',
+        category : 'default'
       },
     ],
     Blocked: [
@@ -30,6 +32,7 @@ function useTaskCollection() {
         column: ColumnType.BLOCKED,
         title: 'Task 3',
         color: 'red.300',
+        category : 'default'
       },
     ],
     Completed: [
@@ -38,6 +41,7 @@ function useTaskCollection() {
         column: ColumnType.COMPLETED,
         title: 'Task 4',
         color: 'green.300',
+        category : 'default'
       },
     ],
   });

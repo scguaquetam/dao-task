@@ -14,13 +14,13 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { ChevronDownIcon } from "@chakra-ui/icons";
-import Column from "./Column";
-import { ColumnType } from "../../enums/enums";
 import { useQuery } from "@apollo/client";
 import { ORGANIZATION_DETAIL } from "../../graphql/organizationDetail.graphql";
 import { Organization } from "../../types/organization.types";
 import { useTranslation } from "react-i18next";
 import ColumnGroups from "./ColumnGroups";
+import { TasksColumn } from "../../types/column.types";
+import EmptyColumn from "./EmptyColumn";
 
 type KanbanComponentProps = {
   id: string;
@@ -28,19 +28,19 @@ type KanbanComponentProps = {
 
 const KanbanComponent = ({ id }: KanbanComponentProps) => {
   const { t } = useTranslation();
-
-  const { colorMode, toggleColorMode } = useColorMode();
   const [orgInfo, setOrgInfo] = useState<Organization | null>(null);
   const { loading, error, data } = useQuery(ORGANIZATION_DETAIL, {
     variables: { findOrganizationId: id },
   });
+  const [columns, setColumns] = useState<TasksColumn[] | null>(null);
 
   useEffect(() => {
     if (!data) return;
     console.log(data);
     setOrgInfo(data.findOrganization);
+    console.log(data.findOrganization.baseTasks);
+    console.log(data.findOrganization.fieldsBase);
   }, [data]);
-
   if (loading) {
     return (
       <Flex justify="center" align="center" height="100vh">
@@ -92,20 +92,20 @@ const KanbanComponent = ({ id }: KanbanComponentProps) => {
 
       <Container maxWidth="container.lg" px={4} py={10}>
         <SimpleGrid columns={{ base: 1, md: 4 }} spacing={{ base: 16, md: 4 }}>
-          {/* <ColumnGroups
-            column={ColumnType.TO_DO}
-            tasks={orgInfo?.tasks.filter(
-              (task) => task.status === ColumnType.TO_DO
-            )}
-          /> */}
-          {/* <Column column={ColumnType.TO_DO} />
-          <Column column={ColumnType.BLOCKED} />
-          <Column column={ColumnType.COMPLETED} />
-          <Column column={ColumnType.COMPLETED} />
-          <Column column={ColumnType.COMPLETED} />
-          <Column column={ColumnType.COMPLETED} />
-          <Column column={ColumnType.COMPLETED} />
-          <Column column={ColumnType.COMPLETED} /> */}
+          <>
+            {orgInfo?.fieldsBase &&
+              orgInfo?.fieldsBase.map((category, index) => (
+                <ColumnGroups
+                  key={index}
+                  columnName="general"
+                  color="blue"
+                  tasks={orgInfo?.baseTasks.filter(
+                    (task) => task.category === category
+                  )}
+                />
+              ))}
+              <EmptyColumn/>
+          </>
         </SimpleGrid>
       </Container>
     </Box>

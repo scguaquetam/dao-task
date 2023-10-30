@@ -28,6 +28,7 @@ function useColumnTasks(column: ColumnType) {
         title: `New ${column} task`,
         color: pickChakraRandomColor('.300'),
         column,
+        category: 'default',
       };
 
       return {

@@ -4,8 +4,8 @@ import { TaskModel } from '../models/taskModel';
 import { DragItem } from '../models/models';
 
 function useColumnDrop(
-  column: ColumnType,
-  handleDrop: (fromColumn: ColumnType, taskId: TaskModel['id']) => void,
+  column: string,
+  handleDrop: (fromColumn: string, taskId: TaskModel['id']) => void,
 ) {
   const [{ isOver }, dropRef] = useDrop<DragItem, void, { isOver: boolean }>({
     accept: ItemType.TASK,

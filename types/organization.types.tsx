@@ -1,3 +1,4 @@
+import { TaskModel } from "../models/taskModel";
 import { Epoch } from "./epoch.types";
 import { User } from "./user.types";
 
@@ -10,4 +11,6 @@ export interface Organization {
   fieldsBase? : string[];
   users : User[];
   epochs? : Epoch[];
+  organizationUsers? : User[];
+  baseTasks: TaskModel[];
 }

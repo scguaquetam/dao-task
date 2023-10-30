@@ -51,7 +51,7 @@ const OrganizationsTable = ({ orgs, myOrgs }: MyOrganizationsTableProps) => {
                   />
                 </Td>
                 <Td>{org.name}</Td>
-                <Td isNumeric>{'org.users.length'}</Td>
+                <Td isNumeric>{org?.organizationUsers?.length ?? ''}</Td>
                 <Td isNumeric>{org.moderatorsNumber}</Td>
                 <Td>
                   {!isMemberOfOrg(org.id) ? (

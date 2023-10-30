@@ -5,6 +5,7 @@ export interface TaskModel {
   title: string;
   column: ColumnType;
   color: string;
+  category: string;
   description?: string;
   status?: TaskStatus; 
   value?: number;
