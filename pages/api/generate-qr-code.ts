@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { Polybase } from "@polybase/client";
 import { auth } from "@iden3/js-iden3-auth";
 
+
 /**
  * API Route for generating a QR Code for the verification process.
  */
@@ -45,13 +46,11 @@ export default async function generateQrCode(
       circuitId: "credentialAtomicQuerySigV2",
       query: {
         allowedIssuers: ["*"],
-        type: "daoCredential",
-        context: "https://raw.githubusercontent.com/sandragcarrillo/schema/main/role.json-ld",
+        type: "ProofOfDaoRole",
+        context: "https://raw.githubusercontent.com/0xPolygonID/tutorial-examples/main/credential-schema/schemas-examples/proof-of-dao-role/proof-of-dao-role.jsonld",
         credentialSubject: {
-          roleId: {
-            $in: [
-              1
-            ]
+            role: {
+                $in: [1,4]
           },
         },
       },

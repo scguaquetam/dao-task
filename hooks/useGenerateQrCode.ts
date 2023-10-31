@@ -1,8 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 
-/**
- * Calls the API to generate a QR code
- */
 const generateQrCode = async (id: string) => {
   const result = await fetch("/api/generate-qr-code", {
     method: "POST",
