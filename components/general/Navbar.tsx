@@ -134,7 +134,7 @@ export default function Nav() {
                 <MenuButton as={Button}>
                   <Image
                     src={imageSrc}
-                    alt={i18n.language === "en" ? "England Flag" : "Spain Flag"}
+                    alt={"lang flag"}
                     boxSize="30px" // Ajusta el tamaño según prefieras
                   />
                 </MenuButton>

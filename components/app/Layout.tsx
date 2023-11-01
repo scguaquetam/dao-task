@@ -330,6 +330,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
           <Menu>
             <MenuButton as={Button}>
               <Image
+                alt="Flag image"
                 src={imageSrc}
                 boxSize="30px" // Ajusta el tamaño según prefieras
               />
@@ -356,7 +357,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   }
 
   return (
-    <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
+    <Box minH="100vh" bg={"gray.500"}>
       <SidebarContent
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}
