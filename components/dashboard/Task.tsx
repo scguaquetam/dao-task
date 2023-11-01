@@ -11,12 +11,13 @@ import {
   Image,
   useDisclosure,
 } from "@chakra-ui/react";
-import { memo } from "react";
+import { memo, useState } from "react";
 import { TaskModel } from "../../models/taskModel";
 import { AutoResizeTextarea } from "./AutoResizeTextArea";
 import { TaskStatus } from "../../enums/enums";
 import { useTranslation } from "react-i18next";
 import TaskDetail from "../modal/TaskDetail.modal";
+import TakeTask from "../modal/takeTask.modal";
 
 type TaskProps = {
   task: TaskModel;
@@ -34,6 +35,7 @@ export default function Task({
   const { colorMode } = useColorMode();
   const { t } = useTranslation();
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const [takeTask, setTakeTask] = useState(false);
   const handleTitleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const newTitle = e.target.value;
     handleUpdate(task.id, { ...task, title: newTitle });
@@ -47,12 +49,14 @@ export default function Task({
     if (priority === "medium") return "/images/LevelMid.png";
     if (priority === "high") return "/images/LevelMax.png";
   };
-  const handleTakeTask = () => {};
+  const handleTakeTask = () => {
+    setTakeTask(true);
+  };
   const seeTaskDetails = () => {};
   type StatusInfo = {
     text: string;
     colorScheme: string;
-    onClick: () => void;
+    onClick: (e: React.MouseEvent) => void;
   };
   type StatusMapType = {
     [key in TaskStatus]: StatusInfo;
@@ -61,36 +65,39 @@ export default function Task({
     [TaskStatus.ACTIVE]: {
       text: t("dashboard.task.actionButtonActive"),
       colorScheme: "purple",
-      onClick: () => {
-        handleTakeTask;
+      onClick: (e) => {
+        e.stopPropagation();
+        handleTakeTask();
       },
     },
     [TaskStatus.PROCESS]: {
       text: t("dashboard.task.actionButtonProcess"),
       colorScheme: "blue",
-      onClick: () => {
-        seeTaskDetails;
+      onClick: (e) => {
+        e.stopPropagation();
+        seeTaskDetails();
       },
     },
     [TaskStatus.FINISHED]: {
       text: t("dashboard.task.actionButtonFinished"),
       colorScheme: "green",
-      onClick: () => {
-        seeTaskDetails;
+      onClick: (e) => {
+        e.stopPropagation();
+        seeTaskDetails();
       },
     },
     [TaskStatus.PAUSED]: {
       text: t("dashboard.task.actionButtonPaused"),
       colorScheme: "orange",
-      onClick: () => {
-        seeTaskDetails;
+      onClick: (e) => {
+        e.stopPropagation();
+        seeTaskDetails();
       },
     },
   };
 
   const checkStatus = (status: TaskStatus): JSX.Element => {
     const { text, colorScheme, onClick } = statusMap[status];
-
     return (
       <Button
         size="sm"
@@ -129,6 +136,10 @@ export default function Task({
     ];
 
     return `${months[currentDate.getMonth()]} ${currentDate.getDate()}`;
+  }
+  const onTakeTask = () => {
+    console.log("take task");
+    handleUpdate(task.id, { ...task, status: TaskStatus.PROCESS });
   }
   return (
     <>
@@ -192,6 +203,13 @@ export default function Task({
           onComplete={onComplete}
         />
       )}
+      {takeTask && 
+        <TakeTask 
+          isOpen={takeTask} 
+          onDone={onTakeTask}
+          onClose={() => {setTakeTask(false)}}
+        />
+      }
     </>
   );
 }
