@@ -154,8 +154,7 @@ const VerifierModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => vo
                   How can I get a Verified Credential?
                 </Heading>
                 <Text fontSize="md" maxW="2xl" textAlign="center">
-                  If you haven't received a claim link, please get in touch with your DAO admin. This will allow you to
-                  claim your DAO credential, after you get it, you can return to this page to prove your membership.
+                 {" If you haven't received a claim link, please get in touch with your DAO admin. This will allow you to claim your DAO credential, after you get it, you can return to this page to prove your membership."}
                 </Text>
                 <Text fontSize="sm" maxW="2xl" textAlign="center" fontWeight={"600"}>
                   Download the app:

@@ -53,6 +53,9 @@ const CreateTaskModal: React.FC<CreateOrganizationModalProps> = ({
   const [description, setDescription] = useState<string>("");
   const [categorySelected, setCategorySelected] = useState<string>("");
   const [prioritySelected, setPrioritySelected] = useState<string>("Medium");
+  const [bgColor1, setBgColor1] = useState(useColorModeValue("gray.300", "gray.700"));
+  const [bgColor2, setBgColor2] = useState(useColorModeValue("gray.200", "gray.500"));
+  const [bgColor3, setBgColor3] = useState(useColorModeValue("gray.100", "gray.600"));
   const [value, setValue] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
   const [created, setCreated] = useState<boolean>(false);
@@ -264,7 +267,7 @@ const CreateTaskModal: React.FC<CreateOrganizationModalProps> = ({
                 <FormLabel>{t("dashboard.createTask.dueDate")}</FormLabel>
                 <Box
                   border="1px solid"
-                  borderColor={useColorModeValue("gray.300", "gray.700")}
+                  borderColor={bgColor1}
                   p={2}
                   borderRadius="md"
                   w="100%"
@@ -303,14 +306,14 @@ const CreateTaskModal: React.FC<CreateOrganizationModalProps> = ({
                   <Box
                     key={index}
                     _hover={{
-                      bgColor: useColorModeValue("gray.200", "gray.500"),
+                      bgColor: bgColor2,
                     }}
                     cursor={"pointer"}
                     color={"gray.400"}
                     rounded={"md"}
                     bgColor={
                       category === categorySelected
-                        ? useColorModeValue("gray.100", "gray.600")
+                        ? bgColor3
                         : "transparent"
                     }
                     onClick={() => setCategorySelected(category)}
@@ -337,14 +340,14 @@ const CreateTaskModal: React.FC<CreateOrganizationModalProps> = ({
               </Flex>
               <Box
                 _hover={{
-                  bgColor: useColorModeValue("gray.200", "gray.500"),
+                  bgColor: bgColor2,
                 }}
                 cursor={"pointer"}
                 color={"gray.400"}
                 rounded={"md"}
                 bgColor={
                   "High" === prioritySelected
-                    ? useColorModeValue("gray.100", "gray.600")
+                    ? bgColor3
                     : "transparent"
                 }
                 onClick={() => setPrioritySelected("High")}
@@ -353,14 +356,14 @@ const CreateTaskModal: React.FC<CreateOrganizationModalProps> = ({
               </Box>
               <Box
                 _hover={{
-                  bgColor: useColorModeValue("gray.200", "gray.500"),
+                  bgColor: bgColor2,
                 }}
                 cursor={"pointer"}
                 color={"gray.400"}
                 rounded={"md"}
                 bgColor={
                   "Medium" === prioritySelected
-                    ? useColorModeValue("gray.100", "gray.600")
+                    ? bgColor3
                     : "transparent"
                 }
                 onClick={() => setPrioritySelected("Medium")}
@@ -369,14 +372,14 @@ const CreateTaskModal: React.FC<CreateOrganizationModalProps> = ({
               </Box>
               <Box
                 _hover={{
-                  bgColor: useColorModeValue("gray.200", "gray.500"),
+                  bgColor: bgColor2,
                 }}
                 cursor={"pointer"}
                 color={"gray.400"}
                 rounded={"md"}
                 bgColor={
                   "Low" === prioritySelected
-                    ? useColorModeValue("gray.100", "gray.600")
+                    ? bgColor3
                     : "transparent"
                 }
                 onClick={() => setPrioritySelected("Low")}

@@ -59,18 +59,21 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   const [showOrganizations, setShowOrganizations] = useState(true);
   const [showDisputes, setShowDisputes] = useState(true);
   const [orgs, setOrgs] = useState<Organization[]>([]);
-
+  const [bgColor1, setBgColor1] = useState(useColorModeValue("white", "gray.900"));
+  const [bgColor2, setBgColor2] = useState(useColorModeValue("gray.200", "gray.700"));
   useEffect(() => {
     if (!data) return;
     setOrgs(data.organizationOfUser);
   }, [data]);
 
+  
+
   return (
     <Box
       transition="3s ease"
-      bg={useColorModeValue("white", "gray.900")}
+      bg={bgColor1}
       borderRight="1px"
-      borderRightColor={useColorModeValue("gray.200", "gray.700")}
+      borderRightColor={bgColor2}
       w={{ base: "full", md: 60 }}
       pos="fixed"
       h="full"
@@ -227,7 +230,8 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   const [imageSrc, setImageSrc] = useState("/images/eng_flag.png");
   const { loading, error, data, refetch } = useQuery(GET_USER);
   const [userInformation, setUserInformation] = useState<any>(null);
-
+  const [bgColor1, setBgColor1] = useState(useColorModeValue("white", "gray.900"));
+  const [bgColor2, setBgColor2] = useState(useColorModeValue("gray.200", "gray.700"));
   useEffect(() => {
     setImageSrc(
       i18n.language === "en" ? "/images/eng_flag.png" : "/images/esp_flag.png"
@@ -252,9 +256,9 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       px={{ base: 4, md: 4 }}
       height="20"
       alignItems="center"
-      bg={useColorModeValue("white", "gray.900")}
+      bg={bgColor1}
       borderBottomWidth="1px"
-      borderBottomColor={useColorModeValue("gray.200", "gray.700")}
+      borderBottomColor={bgColor2}
       justifyContent={{ base: "space-between", md: "flex-end" }}
       {...rest}
     >
@@ -316,8 +320,8 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               </HStack>
             </MenuButton>
             <MenuList
-              bg={useColorModeValue("white", "gray.900")}
-              borderColor={useColorModeValue("gray.200", "gray.700")}
+              bg={bgColor1}
+              borderColor={bgColor2}
             >
               <MenuItem>Profile</MenuItem>
               <MenuItem>Settings</MenuItem>
