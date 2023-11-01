@@ -72,6 +72,7 @@ const TaskDetail: React.FC<TaksDetailProps> = ({
     else if (parseFloat(e.target.value) > 10) return setValue(10);
     else setValue(parseFloat(e.target.value));
   };
+
   const handleSubmit = async () => {
     try {
       setLoading(true);
@@ -310,6 +311,7 @@ const TaskDetail: React.FC<TaksDetailProps> = ({
                         <Text ml={2}>{getRandomName()}</Text>
                       </Box>
                       <Text>Has started a dispute</Text>
+                      <Text>{randomPastDateWithTime()}</Text>
                     </VStack>
                   </Box>
                 }
@@ -367,4 +369,26 @@ function getRandomName() {
   const randomIndex = Math.floor(Math.random() * names.length);
 
   return names[randomIndex];
+}
+
+
+function randomPastDateWithTime(): string {
+  const currentDate = new Date();
+  const oneDayInMillis = 24 * 60 * 60 * 1000;
+
+  // Un número aleatorio entre 1 y 5 para determinar los días a restar
+  const randomDays = Math.floor(Math.random() * 5) + 1;
+
+  currentDate.setTime(currentDate.getTime() - randomDays * oneDayInMillis);
+
+  const months = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", 
+    "Aug", "Sep", "Oct", "Nov", "Dec"
+  ];
+
+  // Obtener la hora y los minutos
+  const hours = currentDate.getHours().toString().padStart(2, '0');
+  const minutes = currentDate.getMinutes().toString().padStart(2, '0');
+
+  return `${months[currentDate.getMonth()]} ${currentDate.getDate()} ${hours}:${minutes}`;
 }
