@@ -84,4 +84,6 @@ Run project
 
 ## Authors
 
-- [@octokatherine](https://www.github.com/octokatherine)
+- [@carlaupgrade](https://github.com/carlaupgrade)
+- [@sandragcarrillo](https://github.com/sandragcarrillo)
+- [@sheva323](https://github.com/sheva323)
