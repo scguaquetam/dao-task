@@ -43,6 +43,8 @@ If you are a Moderator (an admin must invite you):
 1. Integrate Push Protocol -Allow more collaboration -Contribution history or Proof of Work NFT, that allows identifying outstanding contributors for its development within the DAOs.
 
 ## Demo Deployment
+Link to live demo
+https://dao-task-ag0wazfvc-sheva323.vercel.app/
 
 ### Start with Backend
 Link to backend 
