@@ -50,6 +50,31 @@
     }
   },
   "dashboard" : {
-    "taskboardTitle" : "Tablero de tareas"
+    "taskboardTitle" : "Tablero de tareas",
+    "task" : {
+      "actionButtonActive" : "Activa",
+      "actionButtonFinished" : "Finalizada",
+      "actionButtonProcess" : "En proceso",
+      "actionButtonPaused" : "Pausada"
+    },
+    "createTask" : {
+      "modalTitle" : "Crear tarea",
+      "title" : "Título de la tarea",
+      "description" : "Descripción de la tarea",
+      "create" : "Crear tarea",
+      "value" : "Valor de la tarea (max 10)",
+      "cancel" : "Cancelar",
+      "dueDate" : "Fecha de cumplimiento",
+      "createdSuccessfully" : "Tarea creada exitosamente",
+      "close" : "Cerrar",
+      "category" : "Categoría",
+      "error" : {
+        "fillAllFields" : "Por favor, rellena todos los campos",
+        "errorCreatingTask" : "Error al crear la tarea, intenta de nuevo más tarde"
+      }
+    },
+    "detailTask" : {
+      "activity": "Actividad"
+    }
   }
 }

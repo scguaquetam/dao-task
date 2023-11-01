@@ -50,6 +50,31 @@
     }
   },
   "dashboard" : {
-    "taskboardTitle" : "Task Board"
+    "taskboardTitle" : "Task Board",
+    "task" : {
+      "actionButtonActive" : "Active",
+      "actionButtonFinished" : "Finished",
+      "actionButtonProcess" : "Process",
+      "actionButtonPaused" : "Paused"
+    },
+    "createTask" : {
+      "modalTitle" : "Create Task",
+      "title" : "Task title",
+      "description" : "Task description",
+      "create" : "Create task",
+      "value" : "Task value (max 10)",
+      "cancel" : "Cancel",
+      "dueDate" : "Due date",
+      "createdSuccessfully" : "Task created successfully",
+      "close" : "Close",
+      "category" : "Category",
+      "error" : {
+        "fillAllFields" : "Please fill all fields",
+        "errorCreatingTask" : "Error creating organization, please try again later"
+      }
+    },
+    "detailTask" : {
+      "activity": "Activity"
+    }
   }
 }

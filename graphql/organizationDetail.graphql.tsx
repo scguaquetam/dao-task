@@ -14,6 +14,8 @@ export const ORGANIZATION_DETAIL = gql`
         value
         createdAt
         depending
+        category
+        priority
       }
       epochs {
         description

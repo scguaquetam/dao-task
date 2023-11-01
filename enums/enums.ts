@@ -6,11 +6,10 @@ export enum CoumnStatus {
 }
 
 export enum TaskStatus {
-  OPEN = "open",
-  IN_PROGRESS = "inProgress",
-  DONE = "done",
-  CLOSED = "closed",
-  BLOCKED = "blocked",
+  ACTIVE = "active",
+  PROCESS = "process",
+  FINISHED = "finished",
+  PAUSED = "paused",
 }
 
 

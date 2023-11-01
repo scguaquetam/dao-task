@@ -11,4 +11,5 @@ export interface TaskModel {
   value?: number;
   owner?: string;
   createdAt?: string;
+  priority?: string;
 }
