@@ -12,19 +12,22 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
-import React, { useEffect } from "react";
+import React, { useEffect,  useState  } from "react";
 import { Organization } from "../../types/organization.types";
 import { useTranslation } from "react-i18next";
 type MyOrganizationsTableProps = {
   orgs: Organization[];
   myOrgs: Organization[];
 };
+import VerifierModal from "../modal/Verifier.modal";
 
 const OrganizationsTable = ({ orgs, myOrgs }: MyOrganizationsTableProps) => {
   const { t } = useTranslation();
   const isMemberOfOrg = (orgId: string) => {
     return myOrgs.some((myOrg) => myOrg.id === orgId);
   };
+
+  const [isVerifierModalOpen, setVerifierModalOpen] = useState(false);
 
   return (
     <Card>
@@ -61,6 +64,7 @@ const OrganizationsTable = ({ orgs, myOrgs }: MyOrganizationsTableProps) => {
                       mr={2}
                       w="130px" 
                       textAlign="center"
+                      onClick={() => setVerifierModalOpen(true)}
                     >
                       {t("myOrganizations.table.requestJoin")}
                     </Button>
@@ -80,6 +84,7 @@ const OrganizationsTable = ({ orgs, myOrgs }: MyOrganizationsTableProps) => {
           </Tbody>
         </Table>
       </TableContainer>
+      <VerifierModal isOpen={isVerifierModalOpen} onClose={() => setVerifierModalOpen(false)} />
     </Card>
   );
 };
