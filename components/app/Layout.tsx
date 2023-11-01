@@ -52,13 +52,8 @@ interface MobileProps extends FlexProps {
 interface SidebarProps extends BoxProps {
   onClose: () => void;
 }
+
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
-  // const bgColor1 = useColorModeValue("white", "gray.900")
-  // const bgColor2 = useColorModeValue("gray.200", "gray.700")
-  // const bgColor3 = useColorModeValue("gray.100", "gray.900")
-  const getBgColor = (color1: string, color2 : string) => {
-    return useColorModeValue(color1, color2);
-  }
   const { t } = useTranslation();
   const { data } = useQuery(FETCH_ORGANIZATIONS);
   const [showOrganizations, setShowOrganizations] = useState(true);
@@ -73,9 +68,9 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
   return (
     <Box
       transition="3s ease"
-      bg={getBgColor("white", "gray.900")}
+      bg={useColorModeValue("white", "gray.900")}
       borderRight="1px"
-      borderRightColor={getBgColor("gray.200", "gray.700")}
+      borderRightColor={useColorModeValue("gray.200", "gray.700")}
       w={{ base: "full", md: 60 }}
       pos="fixed"
       h="full"
@@ -247,12 +242,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     if (!data) return;
     setUserInformation(data.user);
   }, [data]);
-// const bgColor1 = useColorModeValue("white", "gray.900")
-  // const bgColor2 = useColorModeValue("gray.200", "gray.700")
-  // const bgColor3 = useColorModeValue("gray.100", "gray.900")
-  const getBgColor = (color1: string, color2 : string) => {
-    return useColorModeValue(color1, color2);
-  }
+
   const changeLanguage = async (lng: string) => {
     await i18n.changeLanguage(lng);
   };
@@ -262,9 +252,9 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
       px={{ base: 4, md: 4 }}
       height="20"
       alignItems="center"
-      bg={getBgColor("white", "gray.900")}
+      bg={useColorModeValue("white", "gray.900")}
       borderBottomWidth="1px"
-      borderBottomColor={getBgColor("gray.200", "gray.700")}
+      borderBottomColor={useColorModeValue("gray.200", "gray.700")}
       justifyContent={{ base: "space-between", md: "flex-end" }}
       {...rest}
     >
@@ -326,8 +316,8 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               </HStack>
             </MenuButton>
             <MenuList
-              bg={getBgColor("white", "gray.900")}
-              borderColor={getBgColor("gray.200", "gray.700")}
+              bg={useColorModeValue("white", "gray.900")}
+              borderColor={useColorModeValue("gray.200", "gray.700")}
             >
               <MenuItem>Profile</MenuItem>
               <MenuItem>Settings</MenuItem>
@@ -364,14 +354,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   if (router.pathname === "/") {
     return <>{children}</>;
   }
-  // const bgColor1 = useColorModeValue("white", "gray.900")
-  // const bgColor2 = useColorModeValue("gray.200", "gray.700")
-  // const bgColor3 = useColorModeValue("gray.100", "gray.900")
-  const getBgColor = (color1: string, color2 : string) => {
-    return useColorModeValue(color1, color2);
-  }
+
   return (
-    <Box minH="100vh" bg={getBgColor("gray.100", "gray.900")}>
+    <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
       <SidebarContent
         onClose={() => onClose}
         display={{ base: "none", md: "block" }}
